@@ -15,6 +15,7 @@
 1:51:45
 
 Cloud Merge (ALWAYS merge this way)
+
 1. create a branch
 2. code and commit on that branch
 3. push the branch to github
@@ -23,10 +24,14 @@ Cloud Merge (ALWAYS merge this way)
 5. open a pull request
 6. merge the pull request
 
-  *EVERYONE*
 7. notify the team
-8. checkout master
-9. pull new master
+
+8. git checkout *master*
+9. git pull
+10. git checkout *custom_branch*
+11. git merge master
+
+(step 11 will update your feature branch but leave the master untouched.)
 
 LHL Node Skeleton
 =========
