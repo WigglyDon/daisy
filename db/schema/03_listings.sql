@@ -1,6 +1,8 @@
+
+
 CREATE TABLE listings (
   id SERIAL PRIMARY KEY NOT NULL,
-  plant_name VARCHAR(255),
+  plant_id INTEGER REFERENCES plants(id) ON DELETE CASCADE,
   price INTEGER,
   quantity INTEGER
-)
+);
