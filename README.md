@@ -1,3 +1,18 @@
+# TODO
+- front end
+  nathan
+
+- back end
+  sarah/donnie
+
+- database
+  sarah/donnie
+
+
+
+
+
+
 LHL Node Skeleton
 =========
 
