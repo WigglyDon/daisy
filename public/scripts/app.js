@@ -7,7 +7,16 @@ $(document).ready(function () {
   });
 
   $(".database_button").on("click", function () {
-    $(".listing_container").append("this is a test");
+    $.get("/api/widgets", function(data, status){
+      data.forEach(item => {
+        $(".listing_container").append(item.name);
+
+      });
+    });
+
   });
 
 });
+
+
+
