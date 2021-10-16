@@ -8,10 +8,25 @@
 - database
   sarah/donnie
 
-also edit readme
+# HOW TO MERGE
 
+## NEVER CODE ON MASTER BRANCH, EVER!
+[https://vimeo.com/631356504]
+1:51:45
 
+Cloud Merge (ALWAYS merge this way)
+1. create a branch
+2. code and commit on that branch
+3. push the branch to github
 
+4. go to github
+5. open a pull request
+6. merge the pull request
+
+  *EVERYONE*
+7. notify the team
+8. checkout master
+9. pull new master
 
 LHL Node Skeleton
 =========
