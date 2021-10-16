@@ -1,17 +1,31 @@
-body {
+
+main{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+div{
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  flex-direction: column;
+  img{
+  height: 100px;
+  width: 200px;
+  }
+}
 
-  background: rgb(163, 208, 219);
-  background: linear-gradient(
-    227deg,
-    rgb(134, 209, 120) 0%,
-    rgb(70, 202, 47) 20%,
-    rgb(97, 173, 25) 34%,
-    rgb(165, 168, 9) 59%,
-    rgb(148, 89, 12) 74%,
-    rgb(93, 54, 3) 100%
-  );
+form{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 2em;
+}
+
+header{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 3em;
+  background-color: grey;
 }
