@@ -1,12 +1,6 @@
 
--- selecting price of listing by id
-SELECT listings.price
+-- selecting price of each listing by name - wildcard
+SELECT plants.name as name, listings.price as listing_price
 FROM listings
-WHERE id = 4;
-
-
--- selecting price of each listing by name
-SELECT listings.price
-FROM plants
-JOIN listings on plants.id = plant_id
-WHERE name  = 'tom%';
+JOIN plants on listings.plant_id = plants.id
+WHERE name LIKE 'tom%';
