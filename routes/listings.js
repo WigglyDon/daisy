@@ -1,7 +1,7 @@
 /*
- * All routes for Users are defined here
- * Since this file is loaded in server.js into api/users,
- *   these routes are mounted onto /users
+ * All routes for listings are defined here
+ * Since this file is loaded in server.js into api/listings,
+ *   these routes are mounted onto /listings
  * See: https://expressjs.com/en/guide/using-middleware.html#middleware.router
  */
 
@@ -10,10 +10,10 @@ const router  = express.Router();
 
 module.exports = (db) => {
   router.get("/listings", (req, res) => {
-    db.query(`SELECT * FROM users;`)
+    db.query(`SELECT * FROM listings;`)
       .then(data => {
-        const users = data.rows;
-        res.json({ users });
+        const listings = data.rows;
+        res.json({ listings });
       })
       .catch(err => {
         res
