@@ -12,8 +12,10 @@ const morgan = require("morgan");
 const { Pool } = require("pg");
 const dbParams = require("./lib/db.js");
 const db = new Pool(dbParams);
-db.connect();
-console.log("connected to database");
+// db.connect();
+db.connect(() => {   console.log("Connected to database"); });
+
+// console.log(db);
 
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
@@ -69,5 +71,46 @@ app.post("/listings", (req, res) => {
 app.listen(PORT, () => {
   console.log(`DAISY on port ${PORT}! :)`);
 });
+
+const addListing = function () {
+  return db
+    .query(`
+    SELECT *
+    FROM plants;
+    `).then((res) => {
+      return res.rows;
+    })
+    .catch((err) => {
+      console.log(err.stack);
+    })
+}
+
+console.log(dbParams);
+// console.log(addListing());
+
+addListing().then((res) => {
+  console.log(res);
+})
+.catch((err) => {
+  console.log(err.stack);
+})
+
+// db.query(" SELECT * FROM widgets;")
+// .then(result => {
+//     // console.log(res.rows);
+//     res.json(result.rows);
+
+// }).catch(err => console.error(err.stack));
+
+
+
+
+
+// SELECT plants.name as name
+// FROM plants
+// JOIN listings on plants.id = plant_id
+// where listings.price = 5;
+
+
 
 

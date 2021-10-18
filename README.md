@@ -1,5 +1,13 @@
 ## TODO
 
+Search bar
+Needs to send a search query to the database somehow
+will use %isearchedthis% in the query to find matching items
+what kind of request does this need to be in order to ask for a db search?
+what kind of result is it expecting to get back?
+it will manipulate the DOM with the results somehow.
+
+
 ### Features / User Stories
 1. As a logged in user, I can search for a plant, because I want to see what is for sale
 2. As a logged in user, I can make an offer on a plant listing, because I want to buy the plant
