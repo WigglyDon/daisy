@@ -1,16 +1,25 @@
-# TODO
-- front end
-  nathan
+## TODO
 
-- back end
-  sarah/donnie
+### Features / User Stories
+As a logged in user, I can search for a plant, because I want to see what is for sale
+As a logged in user, I can make an offer on a plant listing, because I want to buy the plant
+As a logged in user, I can mark a listing as favorited, because I want to see it again later
 
-- database
-  sarah/donnie
 
-# HOW TO MERGE
+As an admin, I can post a new listing, because I want to sell a plant
+As an admin, I can delete a listing, because I don't want people to see it anymore
+As an admin, I can make a listing inactive, because I want to sell it again later
 
-## NEVER CODE ON MASTER BRANCH, EVER!
+### Routes
+B GET   /listings
+R GET   /listings/:id
+E POST  /listings/:id/edit
+A POST  /listings
+D POST  /listings/:id/delete
+
+
+## HOW TO MERGE
+### NEVER CODE ON MASTER BRANCH, EVER!
 [https://vimeo.com/631356504]
 1:51:45
 
@@ -28,24 +37,10 @@ Cloud Merge (ALWAYS merge this way)
 
 8. git checkout *master*
 9. git pull
-10. git checkout *custom_branch*
-11. git merge master
-
-(step 11 will update your feature branch but leave the master untouched.)
+10. git checkout *custom_branch* 
 
 LHL Node Skeleton
 =========
-
-## Project Setup
-
-The following steps are only for _one_ of the group members to perform.
-
-1. Create your own copy of this repo using the `Use This Template` button, ideally using the name of your project. The repo should be marked Public
-2. Verify that the skeleton code now shows up in your repo on GitHub, you should be automatically redirected
-3. Clone your copy of the repo to your dev machine
-4. Add your team members as collaborators to the project so that they can push to this repo
-5. Let your team members know the repo URL so that they use the same repo (they should _not_ create a copy/fork of this repo since that will add additional workflow complexity to the project)
-
 
 ## Getting Started
 
@@ -76,4 +71,4 @@ The following steps are only for _one_ of the group members to perform.
 - Node 10.x or above
 - NPM 5.x or above
 - PG 6.x
-hello
+
