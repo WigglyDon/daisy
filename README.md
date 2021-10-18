@@ -1,14 +1,17 @@
 ## TODO
 
 ### Features / User Stories
-As a logged in user, I can search for a plant, because I want to see what is for sale
-As a logged in user, I can make an offer on a plant listing, because I want to buy the plant
-As a logged in user, I can mark a listing as favorited, because I want to see it again later
+1. As a logged in user, I can search for a plant, because I want to see what is for sale
+2. As a logged in user, I can make an offer on a plant listing, because I want to buy the plant
+3. As a logged in user, I can mark a listing as favorited, because I want to see it again later
 
 
-As an admin, I can post a new listing, because I want to sell a plant
-As an admin, I can delete a listing, because I don't want people to see it anymore
-As an admin, I can make a listing inactive, because I want to sell it again later
+
+4. As an admin, I can post a new listing, because I want to sell a plant
+5. As an admin, I can delete a listing, because I don't want people to see it anymore
+6. As an admin, I can make a listing inactive, because I want to sell it again later
+
+
 
 ### Routes
 B GET   /listings
