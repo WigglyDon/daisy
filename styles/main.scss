@@ -1,4 +1,6 @@
-
+body{
+background-color: #b2e0df;
+}
 main{
   display: flex;
   justify-content: space-evenly;
@@ -29,3 +31,13 @@ header{
   height: 3em;
   background-color: grey;
 }
+
+input{
+  border: blanchedalmond;
+  border-radius: 25px;
+  background: #73AD21;
+  width: 200px;
+  height: 35px;
+}
+
+
