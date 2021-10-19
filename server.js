@@ -7,12 +7,26 @@ const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
+const cookieSession = require("cookie-session");
+
+app.use(cookieSession({
+
+  name: 'session',
+  keys: ['test'],
+  maxAge: 24 * 60 * 60 * 100
+}
+));
+
 
 // PG database client/connection setup
 const { Pool } = require("pg");
 const dbParams = require("./lib/db.js");
 const db = new Pool(dbParams);
 db.connect(() => { console.log("Connected to database"); });
+
+//
+
+
 
 
 
@@ -79,8 +93,9 @@ app.get("/listings", (req, res) => {
 });
 
 
-app.get("/listings/id", (req, res) => {
+app.get("/login", (req, res) => {
   res.send(`endpoint for /listings/:id method GET`);
+  res.session.session = 'test';
 });
 
 app.post("/listings", (req, res) => {
