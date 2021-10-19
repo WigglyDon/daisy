@@ -1,19 +1,62 @@
 body{
-background-color: #b2e0df;
+background-color: #F0FFFF;
+font-family: 'Architects Daughter', cursive;
+color:  #4d4d4d;
 }
 main{
   display: flex;
   justify-content: space-evenly;
   align-items: center;
 }
-div{
+.listing_container{
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  border: 1px solid;
+  padding: 10px;
+  border-radius: 25px;
+
+
+span{
+  font-size: 40px;
+}
   img{
-  height: 100px;
-  width: 200px;
+    height: 264px;
+    padding: 0.5em;
+    border-radius: 15px;
+  }
+  .fav{
+    border: none;
+    background-color: inherit;
+    margin-left:13em;
+    border-radius: 5px;
+    i{
+    font-size: 25px;
+    color: #4d4d4d;
+    }
+    i:hover{
+      color:#DC143C;
+    }
+  }
+  .contact{
+    border: none;
+    background-color: inherit;
+    border-radius: 5px;
+    background-color: #3CB371;
+    a{
+      text-decoration: none;
+      color: white;
+    }
+  }
+  .contact :hover{
+    color: lightgrey;
+  }
+  .listing-bottom{
+    display: flex;
+  justify-content: center;
+  flex-direction: row;
+  padding-top: 0.5em;
   }
 }
 
@@ -22,22 +65,34 @@ form{
   justify-content: center;
   align-items: center;
   padding-top: 2em;
+  padding-bottom: 3em;
+}
+
+input{
+  border-radius: 25px;
+  border: 1px solid #ccc;
+  background: inherit;
+  width: 250px;
+  height: 45px;
+  padding-left: 0.6em;
+  font-family: initial;
+}
+input:focus{
+  box-shadow: 0 0 11px rgba(33,33,33,.2);
+}
+input:focus, textarea:focus, select:focus{
+  outline: none;
 }
 
 header{
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 3em;
-  background-color: grey;
+  height: 4em;
+  background-color: #3CB371;
+  box-shadow: 0 0 11px rgba(33,33,33,.2);
+  font-size: 25px;
 }
 
-input{
-  border: blanchedalmond;
-  border-radius: 25px;
-  background: #73AD21;
-  width: 200px;
-  height: 35px;
-}
 
 
