@@ -1,24 +1,32 @@
 $(document).ready(function () {
 
-  $(".test_button").on("click", function () {
-    const daisy_text = "h1"
-    const randomColor = Math.floor(Math.random() * 16777215).toString(16);
-    $(daisy_text).css("color", `#${randomColor}`);
+  $("form").on("submit", function (event) {
+    event.preventDefault();
+    const formdata = $(this).serializeArray();
+    const data = {};
+    $(formdata).each(function (index, obj) { data[obj.name] = obj.value; });
+    console.log("formdata", formdata);
+    console.log("data", data);
+    $.get(`/listings?search=${data['search-bar']}`, function (newData) {
+      renderListings(newData.listings);
+    });
   });
 
-  $("form").on("submit", function (event) {
+  function renderListings(listings) {
+    $(`.listings_master_container`).empty();
+    console.log(listings);
 
-    event.preventDefault();
-    console.log(event);
-    $(".listings_master_container").append(createListings());
-  })
+    for (const listing of listings) {
+      const newListing = createListing(listing);
+      $(`.listings_master_container`).prepend(newListing);
+    }
+  }
 
-  const createListings = function () {
-    const plantName = "plantName";
-    const $listingDom = $(`
+  function createListing(listing) {
+      return $(`
     <div class="listing_container">
-    <h3>${plantName}</h3>
-    <img src="https://cdn.britannica.com/56/197956-050-5062911A/Arabian-jasmine.jpg" alt="flower">
+    <h3>${listing.name}</h3>
+    <img src="${listing.picture_url}" alt="flower">
     <div class="listing-bottom">
       <button>
         <a href="mailto:someone@mozilla.org">Contact</a>
@@ -29,18 +37,6 @@ $(document).ready(function () {
     </div>
   </div>
     `);
-    return $listingDom;
-
-
   };
 
-
-
-  // $.get("/api/widgets", function(data, status){
-  //   data.forEach(item => {
-  //     $(".listing_container").append(item.name);
-
-  //   });
-  // });
-
-})
+});
