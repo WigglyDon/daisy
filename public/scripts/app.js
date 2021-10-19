@@ -15,6 +15,16 @@ $(document).ready(function() {
 
   })
 
+  $(".logout").on("click", function(event) {
+    console.log("button clicked");
+    // event.preventDefault();
+    $.post(`/logout`, function() {
+      console.log("get request")
+
+    })
+
+  })
+
 
 
   $("form").on("submit", function(event) {
