@@ -12,10 +12,9 @@ const morgan = require("morgan");
 const { Pool } = require("pg");
 const dbParams = require("./lib/db.js");
 const db = new Pool(dbParams);
-// db.connect();
 db.connect(() => { console.log("Connected to database"); });
 
-// console.log(db);
+
 
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
@@ -45,7 +44,7 @@ const listingsRoutes = require("./routes/listings");
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 app.use("/users", usersRoutes(db));
-app.use("/listings", listingsRoutes(db));
+// app.use("/listings", listingsRoutes(db));
 // Note: mount other resources here, using the same pattern above
 
 // Home page
@@ -56,15 +55,19 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
+
 app.get("/listings", (req, res) => {
+  const searchQuery = req.query.search;
   let query = `
-  SELECT name
-  FROM plants;
-  `;
+    SELECT name, picture_url
+    FROM listings
+    JOIN plants on plant_id = plants.id
+    WHERE name LIKE '%${searchQuery}%';
+    `;
   db.query(query)
     .then(data => {
-      const plants = data.rows
-      res.json({ plants });
+      const listings = data.rows
+      res.json({ listings });
     })
     .catch(err => {
       res
@@ -72,8 +75,9 @@ app.get("/listings", (req, res) => {
         .json({ error: err.message });
     });
   return app;
-    ;
+  ;
 });
+
 
 app.get("/listings/id", (req, res) => {
   res.send(`endpoint for /listings/:id method GET`);
@@ -87,36 +91,7 @@ app.listen(PORT, () => {
   console.log(`DAISY on port ${PORT}! :)`);
 });
 
-// const addListing = function () {
-//   // return db
-//   //   .query(`
-//   //   SELECT plants.name as name
-//   //   FROM plants
-//   //   JOIN listings on plants.id = plant_id
-//   //   where listings.price = 5;
-//   //   `).then((res) => {
-//   //     const plants = res.rows
-//   //     res.json({plants});
-//   //   })
-//   //   .catch((err) => {
-//   //     console.log(err.stack);
-//   //   })
-// }
 
-
-// addListing().then((res) => {
-//   console.log(res);
-// })
-// .catch((err) => {
-//   console.log(err.stack);
-// })
-
-
-
-// SELECT plants.name as name
-// FROM plants
-// JOIN listings on plants.id = plant_id
-// where listings.price = 5;
 
 
 
