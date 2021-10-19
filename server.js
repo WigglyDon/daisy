@@ -12,8 +12,10 @@ const morgan = require("morgan");
 const { Pool } = require("pg");
 const dbParams = require("./lib/db.js");
 const db = new Pool(dbParams);
-db.connect();
-console.log("connected to database");
+// db.connect();
+db.connect(() => { console.log("Connected to database"); });
+
+// console.log(db);
 
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
@@ -55,7 +57,22 @@ app.get("/", (req, res) => {
 });
 
 app.get("/listings", (req, res) => {
-  res.send(`endpoint for /listings method GET`);
+  let query = `
+  SELECT name
+  FROM plants;
+  `;
+  db.query(query)
+    .then(data => {
+      const plants = data.rows
+      res.json({ plants });
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
+  return app;
+    ;
 });
 
 app.get("/listings/id", (req, res) => {
@@ -69,5 +86,38 @@ app.post("/listings", (req, res) => {
 app.listen(PORT, () => {
   console.log(`DAISY on port ${PORT}! :)`);
 });
+
+// const addListing = function () {
+//   // return db
+//   //   .query(`
+//   //   SELECT plants.name as name
+//   //   FROM plants
+//   //   JOIN listings on plants.id = plant_id
+//   //   where listings.price = 5;
+//   //   `).then((res) => {
+//   //     const plants = res.rows
+//   //     res.json({plants});
+//   //   })
+//   //   .catch((err) => {
+//   //     console.log(err.stack);
+//   //   })
+// }
+
+
+// addListing().then((res) => {
+//   console.log(res);
+// })
+// .catch((err) => {
+//   console.log(err.stack);
+// })
+
+
+
+// SELECT plants.name as name
+// FROM plants
+// JOIN listings on plants.id = plant_id
+// where listings.price = 5;
+
+
 
 
