@@ -1,8 +1,5 @@
 
 
-
-
-
 $(document).ready(function() {
 
   $(".admin_button").on("click", function(event) {
