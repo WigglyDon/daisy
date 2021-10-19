@@ -1,7 +1,7 @@
 
 
 $(document).ready(function() {
-  loadListings(12);
+  loadListings(15);
 
 
   $(".admin_button").on("click", function(event) {
@@ -16,18 +16,37 @@ $(document).ready(function() {
 
   $(".logout").on("click", function(event) {
     location.reload();
-    // event.preventDefault();
+
     $.post(`/logout`, function() {
       console.log("get request")
     })
   })
 
 
-  $("form").on("submit", function(event) {
+  $(".search-form").on("submit", function(event) {
+    event.preventDefault();
+
+    const search = $("#new-listing").val();
+    loadListings(-1, search);
+  });
+
+
+  $(".new-listing").on("submit", function(event) {
     event.preventDefault();
     // const formdata = $(this).serializeArray();
     const search = $("#search-bar").val();
-    loadListings(-1, search);
+    $.post('/listings')
+
+      .then(() => {
+
+
+
+
+
+        console.log("post request made");
+      }
+      )
+
   });
 });
 
@@ -65,6 +84,8 @@ function createListing(listing) {
   return $(`
   <div class="listing_container">
   <h3>${listing.name}</h3>
+  <h4>${listing.price}</h4>
+  <h4>${listing.quantity}</h4>
   <img src="${listing.picture_url}" alt="flower">
   <div class="listing-bottom">
     <button>

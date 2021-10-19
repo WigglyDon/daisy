@@ -75,6 +75,7 @@ app.get("/", (req, res) => {
   } else {
     res.render("admin");
   }
+
 });
 
 
@@ -96,7 +97,25 @@ app.post("/logout", (req, res) => {
 
 //LISTINGS
 app.post("/listings", (req, res) => {
-  res.send('endpoint for /listings method POST')
+  let query = `
+  INSERT INTO listings (name, picture_url, price, quantity)
+  VALUES ('example', 'anything', 5.00, 4)`;
+
+  db.query(query)
+    .then(data => {
+      console.log("added to db")
+      return app;
+    })
+  // .catch(err => {
+  //   res
+  //     .status(500)
+  //     .json({ error: err.message });
+  // });
+
+
+
+  // res.send('endpoint for /listings method POST')
+
 });
 
 
@@ -106,16 +125,15 @@ app.get("/listings", (req, res) => {
   const limit = Number(req.query.limit);
   console.log("searchQuery", searchQuery);
   let query = `
-    SELECT name, picture_url
-    FROM listings
-    JOIN plants on plant_id = plants.id`;
+    SELECT name, picture_url, price, quantity
+    FROM listings`;
 
   if (searchQuery && searchQuery.length)
     query += ` WHERE name LIKE '%${searchQuery}%'`;
   console.log("limit", limit);
 
   if (limit > 0)
-    query += ` LIMIT ${limit}`;
+    query += ` LIMIT ${limit} `;
 
   console.log('query = ', query);
 
@@ -135,11 +153,8 @@ app.get("/listings", (req, res) => {
 
 
 
-
-
-
 app.listen(PORT, () => {
-  console.log(`DAISY on port ${PORT}! :)`);
+  console.log(`DAISY on port ${PORT} ! :)`);
 });
 
 
