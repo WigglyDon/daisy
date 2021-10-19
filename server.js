@@ -11,8 +11,9 @@ const cookieSession = require("cookie-session");
 
 app.use(cookieSession({
 
-  name: 'session',
-  keys: ['test'],
+  name: 'COOKIE session',
+  // keys: ['test'],
+  signed: false,
   maxAge: 24 * 60 * 60 * 100
 }
 ));
@@ -94,13 +95,23 @@ app.get("/listings", (req, res) => {
 
 
 app.get("/login", (req, res) => {
+
+  req.session = {
+    user: 'John'
+  };
   res.send(`endpoint for /listings/:id method GET`);
-  res.session.session = 'test';
 });
 
 app.post("/listings", (req, res) => {
   res.send('endpoint for /listings method POST')
 });
+
+app.post("/logout", (req, res) => {
+
+  req.session = null;
+  res.send('endpoint for /logout method POST')
+});
+
 
 app.listen(PORT, () => {
   console.log(`DAISY on port ${PORT}! :)`);

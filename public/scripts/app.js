@@ -1,14 +1,21 @@
 
 
-
-
-
 $(document).ready(function() {
 
   $(".admin_button").on("click", function(event) {
     console.log("button clicked");
     // event.preventDefault();
     $.get(`/login`, function() {
+      console.log("get request")
+
+    })
+
+  })
+
+  $(".logout").on("click", function(event) {
+    console.log("button clicked");
+    // event.preventDefault();
+    $.post(`/logout`, function() {
       console.log("get request")
 
     })
