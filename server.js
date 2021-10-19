@@ -13,7 +13,7 @@ const { Pool } = require("pg");
 const dbParams = require("./lib/db.js");
 const db = new Pool(dbParams);
 // db.connect();
-db.connect(() => {   console.log("Connected to database"); });
+db.connect(() => { console.log("Connected to database"); });
 
 // console.log(db);
 
@@ -57,7 +57,22 @@ app.get("/", (req, res) => {
 });
 
 app.get("/listings", (req, res) => {
-  res.send(`endpoint for /listings method GET`);
+  let query = `
+  SELECT name
+  FROM plants;
+  `;
+  db.query(query)
+    .then(data => {
+      const plants = data.rows
+      res.json({ plants });
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
+  return app;
+    ;
 });
 
 app.get("/listings/id", (req, res) => {
@@ -72,37 +87,29 @@ app.listen(PORT, () => {
   console.log(`DAISY on port ${PORT}! :)`);
 });
 
-const addListing = function () {
-  return db
-    .query(`
-    SELECT *
-    FROM plants;
-    `).then((res) => {
-      return res.rows;
-    })
-    .catch((err) => {
-      console.log(err.stack);
-    })
-}
-
-console.log(dbParams);
-// console.log(addListing());
-
-addListing().then((res) => {
-  console.log(res);
-})
-.catch((err) => {
-  console.log(err.stack);
-})
-
-// db.query(" SELECT * FROM widgets;")
-// .then(result => {
-//     // console.log(res.rows);
-//     res.json(result.rows);
-
-// }).catch(err => console.error(err.stack));
+// const addListing = function () {
+//   // return db
+//   //   .query(`
+//   //   SELECT plants.name as name
+//   //   FROM plants
+//   //   JOIN listings on plants.id = plant_id
+//   //   where listings.price = 5;
+//   //   `).then((res) => {
+//   //     const plants = res.rows
+//   //     res.json({plants});
+//   //   })
+//   //   .catch((err) => {
+//   //     console.log(err.stack);
+//   //   })
+// }
 
 
+// addListing().then((res) => {
+//   console.log(res);
+// })
+// .catch((err) => {
+//   console.log(err.stack);
+// })
 
 
 

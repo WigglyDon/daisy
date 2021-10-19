@@ -1,28 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <title>Daisy</title>
+  <head>
+    <title>Daisy</title>
 
-  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
-  <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
-  <link rel="stylesheet" href="/styles/main.css" type="text/css" />
-  <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/main.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
 
-  <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-  <script type="text/javascript" src="/scripts/app.js"></script>
-</head>
+    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+    <script type="text/javascript" src="/scripts/app.js"></script>
+  </head>
 
-<body>
-  <header>
-    <h1>Daisy</h1>
-  </header>
-  <form action="/listings" method="GET">
-    <input type="text" id="search-bar" name="search-bar" placeholder="search">
-  </form>
+  <body>
+    <header>
+      <h1>Daisy</h1>
+    </header>
 
-  <main>
-    <div class="listing_container">
+    <form class="search-form" method="GET" action="/listings">
+      <input type="text" id="search-bar" name="search-bar" placeholder="search">
+    </form>
+
+    <main>
+
+    <div class="listings_master_container">
+
+    <!-- <div class="listing_container">
       <h3>Jasmine</h3>
       <img src="https://cdn.britannica.com/56/197956-050-5062911A/Arabian-jasmine.jpg" alt="flower">
       <div class="listing-bottom">
@@ -35,33 +39,35 @@
       </div>
     </div>
 
-    <div class="listing_container">
-      <h3>Jasmine</h3>
-      <img src="https://cdn.britannica.com/56/197956-050-5062911A/Arabian-jasmine.jpg" alt="flower">
-      <div class="listing-bottom">
-        <button>
-          <a href="mailto:someone@mozilla.org">Contact</a>
-        </button>
-        <button class="fav">
-          fav
-        </button>
+      <div class="listing_container">
+        <h3>Jasmine</h3>
+        <img src="https://cdn.britannica.com/56/197956-050-5062911A/Arabian-jasmine.jpg" alt="flower">
+        <div class="listing-bottom">
+          <button>
+            <a href="mailto:someone@mozilla.org">Contact</a>
+          </button>
+          <button class="fav">
+            fav
+          </button>
+        </div>
       </div>
+      <div class="listing_container">
+        <h3>Jasmine</h3>
+        <img src="https://cdn.britannica.com/56/197956-050-5062911A/Arabian-jasmine.jpg" alt="flower">
+        <div class="listing-bottom">
+          <button>
+            <a href="mailto:someone@mozilla.org">Contact</a>
+          </button>
+          <button class="fav">
+            fav
+          </button>
+        </div>
+      </div> -->
+
     </div>
-    <div class="listing_container">
-      <h3>Jasmine</h3>
-      <img src="https://cdn.britannica.com/56/197956-050-5062911A/Arabian-jasmine.jpg" alt="flower">
-      <div class="listing-bottom">
-        <button>
-          <a href="mailto:someone@mozilla.org">Contact</a>
-        </button>
-        <button class="fav">
-          fav
-        </button>
-      </div>
-    </div>
 
-  </main>
+    </main>
 
-</body>
+  </body>
 
-</html>
+  </html>
