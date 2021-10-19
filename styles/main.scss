@@ -60,7 +60,7 @@ span{
   }
 }
 
-form{
+.search-form{
   display: flex;
   justify-content: center;
   align-items: center;
@@ -94,5 +94,11 @@ header{
   font-size: 25px;
 }
 
-
-
+.new-listing{
+  display: flex;
+  align-items: center;
+ flex-direction: column;
+ input{
+   padding: 1em;
+ }
+}
