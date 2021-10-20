@@ -39,15 +39,29 @@ $(document).ready(function() {
 
       .then(() => {
 
-
-
-
-
         console.log("post request made");
       }
       )
 
   });
+
+
+  $(".delete").on("click", function(event) {
+    event.preventDefault();
+    // const id =
+    $.post('/listings/:id/delete')
+
+      .then(() => {
+
+        console.log("this item is deleted");
+      }
+      )
+
+
+  })
+
+
+
 });
 
 
@@ -94,7 +108,17 @@ function createListing(listing) {
     <button class="fav">
       fav
     </button>
+    <button class="delete"
+
+    >
+    delete
+  </button>
   </div>
 </div>
   `);
 };
+
+
+
+
+    // style= "display:none;"

@@ -97,6 +97,11 @@ app.post("/logout", (req, res) => {
 
 //LISTINGS
 app.post("/listings", (req, res) => {
+  const name = req.query;
+  console.log("name", name);
+  // const picture_url =
+  //   const price =
+  //     const quantity =
   let query = `
   INSERT INTO listings (name, picture_url, price, quantity)
   VALUES ('example', 'anything', 5.00, 4)`;
@@ -106,17 +111,33 @@ app.post("/listings", (req, res) => {
       console.log("added to db")
       return app;
     })
-  // .catch(err => {
-  //   res
-  //     .status(500)
-  //     .json({ error: err.message });
-  // });
-
-
-
-  // res.send('endpoint for /listings method POST')
 
 });
+
+app.post('/listings/:id/delete', (req, res) => {
+  const id = req.params.id;
+  let query = `
+  DELETE FROM listings WHERE id = ${id};`;
+
+  db.query(query)
+    .then(data => {
+      console.log("added to db")
+      return app;
+    })
+
+});
+
+// app.post("/urls/:shortURL/delete", (req, res) => {
+//   if (req.session.email !== urlDatabase[req.params.shortURL].owner) {
+//     res.redirect("/urls");
+//     return;
+//   }
+//   const shortURL = req.params.shortURL;
+//   delete urlDatabase[shortURL];
+//   res.redirect(`/urls`);
+// });
+
+
 
 
 
