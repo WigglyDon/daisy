@@ -9,28 +9,24 @@ const app = express();
 const morgan = require("morgan");
 const cookieSession = require("cookie-session");
 
-app.use(cookieSession({
-
-  name: 'COOKIE',
-  // keys: ['test'],
-  signed: false,
-  maxAge: 24 * 60 * 60 * 100
-}
-));
-
+app.use(
+  cookieSession({
+    name: "COOKIE",
+    // keys: ['test'],
+    signed: false,
+    maxAge: 24 * 60 * 60 * 100,
+  })
+);
 
 // PG database client/connection setup
 const { Pool } = require("pg");
 const dbParams = require("./lib/db.js");
 const db = new Pool(dbParams);
-db.connect(() => { console.log("Connected to database"); });
+db.connect(() => {
+  console.log("Connected to database");
+});
 
 //
-
-
-
-
-
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -76,59 +72,56 @@ app.get("/", (req, res) => {
   } else {
     res.render("admin");
   }
-
 });
-
 
 //LOGIN
 app.get("/login", (req, res) => {
   req.session = {
-    user: 'John'
+    user: "John",
   };
 
-  res.redirect("/")
+  res.redirect("/");
 });
 
 ///LOGOUT
 app.post("/logout", (req, res) => {
-
   req.session = null;
-  res.send('endpoint for /logout method POST')
+  res.send("endpoint for /logout method POST");
 });
 
 //LISTINGS
 app.post("/listings", (req, res) => {
   const name = req.query;
-  console.log('QUERY', req.query);
-  console.log('BODY', req.body);
+  console.log("QUERY", req.query);
+  console.log("BODY", req.body);
   console.log("name", name);
   // const picture_url =
   //   const price =
   //     const quantity =
   let query = `
   INSERT INTO listings (name, picture_url, price, quantity)
-  VALUES ('example', 'anything', 5.00, 4)`;
+  VALUES ($1, $2, $3, $4)`;
 
-  db.query(query)
-    .then(data => {
-      console.log("added to db")
-      return app;
-    })
-
+  db.query(query, [
+    req.body["listing-name"],
+    req.body["img-url"],
+    req.body["price"],
+    req.body["quantity"],
+  ]).then((data) => {
+    console.log(data.rows);
+    res.json(data.rows[0]);
+  });
 });
 
-app.post('/listings/:id/delete', (req, res) => {
+app.post("/listings/:id/delete", (req, res) => {
   const id = req.params.id;
   let query = `
   DELETE FROM listings WHERE id = ${id};`;
 
-  db.query(query)
-    .then(data => {
-      console.log("deleted from db")
-      res.json(data.rows);
-      return app;
-    })
-
+  db.query(query).then((data) => {
+    console.log("deleted from db");
+    res.json({});
+  });
 });
 
 // app.post("/urls/:shortURL/delete", (req, res) => {
@@ -140,10 +133,6 @@ app.post('/listings/:id/delete', (req, res) => {
 //   delete urlDatabase[shortURL];
 //   res.redirect(`/urls`);
 // });
-
-
-
-
 
 app.get("/listings", (req, res) => {
   const searchQuery = req.query.search;
@@ -157,33 +146,23 @@ app.get("/listings", (req, res) => {
     query += ` WHERE name LIKE '%${searchQuery}%'`;
   console.log("limit", limit);
 
-  if (limit > 0)
-    query += ` LIMIT ${limit} `;
+  query += ` ORDER BY id DESC`;
 
-  console.log('query = ', query);
+  if (limit > 0) query += ` LIMIT ${limit} `;
+
+  console.log("query = ", query);
 
   db.query(query)
-    .then(data => {
-      const listings = data.rows
+    .then((data) => {
+      console.log(data.rows);
+      const listings = data.rows;
       res.json({ listings });
     })
-    .catch(err => {
-      res
-        .status(500)
-        .json({ error: err.message });
+    .catch((err) => {
+      res.status(500).json({ error: err.message });
     });
-  return app;
-  ;
 });
-
-
 
 app.listen(PORT, () => {
   console.log(`DAISY on port ${PORT} ! :)`);
 });
-
-
-
-
-
-

@@ -1,28 +1,21 @@
-
-
-
 $(document).ready(function() {
-  loadListings(15);
-
+  loadListings(70);
 
   $(".admin_button").on("click", function(event) {
     location.reload();
     // event.preventDefault();
     $.get(`/login`, function() {
-      console.log("get request")
-
-    })
-
-  })
+      console.log("get request");
+    });
+  });
 
   $(".logout").on("click", function(event) {
     location.reload();
 
     $.post(`/logout`, function() {
-      console.log("get request")
-    })
-  })
-
+      console.log("get request");
+    });
+  });
 
   $(".search-form").on("submit", function(event) {
     event.preventDefault();
@@ -31,75 +24,58 @@ $(document).ready(function() {
     loadListings(-1, search);
   });
 
-
   $(".new-listing").on("submit", function(event) {
     event.preventDefault();
 
     const formdata = $(this).serializeArray();
     const package = formdata.reduce((accu, current) => {
-
       accu[current.name] = current.value;
       return accu;
-    }, {})
-    debugger
+    }, {});
+
     const search = $("#search-bar").val();
-    $.post('/listings', package)
-
-      .then(() => {
-
-        console.log("post request made");
-      }
-      )
+    $.post("/listings", package, () => {
+      console.log("post request made");
+      window.location.reload();
+    })
 
   });
-
-
 });
 
-
 const loadListings = function(limit, search) {
-  const searchText = search ? `search=${search}` : '';
-  const limitText = limit ? `limit=${limit}` : '';
+  const searchText = search ? `search=${search}` : "";
+  const limitText = limit ? `limit=${limit}` : "";
 
   console.log("SearchText", searchText);
-
 
   const url = `/listings?${searchText}&${limitText}`;
   console.log("url", url);
 
-  $.get(url)
-    .then(data => {
-      renderListings(data.listings);
+  $.get(url).then((data) => {
+    renderListings(data.listings);
 
-      $(".delete").on("click", function(event) {
-        event.preventDefault();
+    $(".delete").on("click", function(event) {
+      event.preventDefault();
 
-        const id = event.target.dataset.id;
-        $.post(`/listings/${id}/delete`)
-
-          .then(() => {
-
-            console.log("this item is deleted");
-            window.location.reload();
-          }
-          )
-
-      })
-    }
-    )
-}
-
+      const id = event.target.dataset.id;
+      $.post(`/listings/${id}/delete`)
+        .then(() => {
+          console.log("this item is deleted");
+          window.location.reload();
+        });
+    });
+  });
+};
 
 function renderListings(listings) {
   $(`.listings_master_container`).empty();
   console.log(listings);
-
-  for (const listing of listings) {
+  const sortedListings = listings.sort((a, b) => b - a);
+  for (const listing of sortedListings) {
     const newListing = createListing(listing);
-    $(`.listings_master_container`).prepend(newListing);
+    $(`.listings_master_container`).append(newListing);
   }
 }
-
 
 function createListing(listing) {
   console.log("LISTING", listing);
@@ -124,9 +100,6 @@ data-id = '${listing.id}'
   </div>
 </div>
   `);
-};
+}
 
-
-
-
-    // style= "display:none;"
+// style= "display:none;"
