@@ -79,12 +79,8 @@ app.get("/login", (req, res) => {
   req.session = {
     user: "John",
   };
-<<<<<<< HEAD
-  res.redirect("/")
-=======
 
   res.redirect("/");
->>>>>>> master
 });
 
 ///LOGOUT
@@ -128,19 +124,7 @@ app.post("/listings/:id/delete", (req, res) => {
   });
 });
 
-<<<<<<< HEAD
-=======
-// app.post("/urls/:shortURL/delete", (req, res) => {
-//   if (req.session.email !== urlDatabase[req.params.shortURL].owner) {
-//     res.redirect("/urls");
-//     return;
-//   }
-//   const shortURL = req.params.shortURL;
-//   delete urlDatabase[shortURL];
-//   res.redirect(`/urls`);
-// });
 
->>>>>>> master
 app.get("/listings", (req, res) => {
   const searchQuery = req.query.search;
   console.log("QUERY", req.originalUrl);
