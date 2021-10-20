@@ -1,4 +1,4 @@
-
+DROP TABLE IF EXISTS listings;
 
 CREATE TABLE listings (
    id SERIAL PRIMARY KEY NOT NULL,
