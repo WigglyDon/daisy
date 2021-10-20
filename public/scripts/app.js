@@ -44,9 +44,7 @@ $(document).ready(function() {
       .then((res) => {
         window.location.reload();
       })
-      .catch((err) => {
-        res.status(500).json({ error: err.message });
-      });
+
   });
 });
 

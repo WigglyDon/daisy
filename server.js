@@ -91,17 +91,11 @@ app.post("/logout", (req, res) => {
 
 //LISTINGS
 app.post("/listings", (req, res) => {
-  const name = req.query;
-  console.log("QUERY", req.query);
-  console.log("BODY", req.body);
-  console.log("name", name);
-  // const picture_url =
-  //   const price =
-  //     const quantity =
+
   let query = `
   INSERT INTO listings (name, picture_url, price, quantity)
   VALUES ($1, $2, $3, $4)`;
-
+  console.log(req.body);
   db.query(query, [
     req.body["listing-name"],
     req.body["img-url"],
@@ -110,6 +104,13 @@ app.post("/listings", (req, res) => {
   ]).then((data) => {
 
     res.json({});
+  })
+
+  .catch((err) => {
+    debugger
+    console.log('error 1');
+    console.log(err);
+    res.status(500).json({ error: err.message });
   });
 });
 
@@ -121,6 +122,10 @@ app.post("/listings/:id/delete", (req, res) => {
   db.query(query).then((data) => {
     console.log("deleted from db");
     res.json({});
+  })
+  .catch((err) => {
+    console.log('error 2');
+    res.status(500).json({ error: err.message });
   });
 });
 
@@ -151,6 +156,7 @@ app.get("/listings", (req, res) => {
       res.json({ listings });
     })
     .catch((err) => {
+      console.log('error 3');
       res.status(500).json({ error: err.message });
     });
 });
