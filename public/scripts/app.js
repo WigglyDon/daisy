@@ -20,7 +20,7 @@ $(document).ready(function() {
   $(".search-form").on("submit", function(event) {
     event.preventDefault();
 
-    const search = $("#new-listing").val();
+    const search = $("#search-bar").val();
     loadListings(-1, search);
   });
 
@@ -34,11 +34,16 @@ $(document).ready(function() {
     }, {});
 
     const search = $("#search-bar").val();
-    $.post("/listings", package, () => {
-      console.log("post request made");
-      window.location.reload();
-    })
 
+    $.post("/listings", package)
+      .then((res) => {
+        console.log("post request made");
+        window.location.reload();
+      })
+      .catch((err) => {
+
+        console.log(err);
+      });
   });
 });
 

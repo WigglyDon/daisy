@@ -108,8 +108,8 @@ app.post("/listings", (req, res) => {
     req.body["price"],
     req.body["quantity"],
   ]).then((data) => {
-    console.log(data.rows);
-    res.json(data.rows[0]);
+
+    res.json({});
   });
 });
 
@@ -136,6 +136,7 @@ app.post("/listings/:id/delete", (req, res) => {
 
 app.get("/listings", (req, res) => {
   const searchQuery = req.query.search;
+  console.log("QUERY", req.originalUrl);
   const limit = Number(req.query.limit);
   console.log("searchQuery", searchQuery);
   let query = `
@@ -154,7 +155,7 @@ app.get("/listings", (req, res) => {
 
   db.query(query)
     .then((data) => {
-      console.log(data.rows);
+
       const listings = data.rows;
       res.json({ listings });
     })
