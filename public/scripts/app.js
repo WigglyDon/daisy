@@ -2,19 +2,24 @@ $(document).ready(function() {
   loadListings(70);
 
   $(".admin_button").on("click", function(event) {
-    location.reload();
+
+    // location.reload();
     // event.preventDefault();
     $.get(`/login`, function() {
       console.log("get request");
     });
+    setTimeout(function() { location.reload(); }, 50);
   });
 
   $(".logout").on("click", function(event) {
-    location.reload();
+
+    // location.reload();
 
     $.post(`/logout`, function() {
       console.log("get request");
     });
+
+    setTimeout(function() { location.reload(); }, 50);
   });
 
   $(".search-form").on("submit", function(event) {

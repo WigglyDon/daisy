@@ -67,7 +67,7 @@ app.use("/users", usersRoutes(db));
 //HOME
 //!!!
 app.get("/", (req, res) => {
-  if (req.session.user) {
+  if (!req.session.user) {
     res.render("index");
   } else {
     res.render("admin");
