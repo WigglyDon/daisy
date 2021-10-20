@@ -3,10 +3,10 @@ background-color: #F0FFFF;
 font-family: 'Architects Daughter', cursive;
 color:  #4d4d4d;
 }
-main{
+.listings_master_container{
   display: flex;
-  justify-content: space-evenly;
-  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 .listing_container{
   display: flex;
@@ -16,7 +16,7 @@ main{
   border: 1px solid;
   padding: 10px;
   border-radius: 25px;
-
+margin: 10px;
 
 span{
   font-size: 40px;
@@ -86,12 +86,13 @@ input:focus, textarea:focus, select:focus{
 
 header{
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   height: 4em;
   background-color: #3CB371;
   box-shadow: 0 0 11px rgba(33,33,33,.2);
   font-size: 25px;
+  padding: 1em;
 }
 
 .new-listing{
@@ -102,3 +103,32 @@ header{
    padding: 1em;
  }
 }
+
+.listing-info{
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.nav-btn{
+ button{
+  border: 1px solid white;
+  background-color: inherit;
+  border-radius: 20px;
+  background-color: #3CB371;
+ }
+
+}
+.nav-btn button:hover{
+  color: lightgrey;
+ }
+
+ .delete{
+  border: none;
+  background-color: inherit;
+  border-radius: 5px;
+  background-color: red;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #F0FFFF;
+ }
+ .delete:hover{
+  color: lightgrey;
+ }
