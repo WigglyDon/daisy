@@ -1,100 +1,89 @@
-
-
 $(document).ready(function() {
-  loadListings(15);
-
+  loadListings(70);
 
   $(".admin_button").on("click", function(event) {
     location.reload();
     // event.preventDefault();
     $.get(`/login`, function() {
-      console.log("get request")
-
-    })
-
-  })
+      console.log("get request");
+    });
+  });
 
   $(".logout").on("click", function(event) {
     location.reload();
 
     $.post(`/logout`, function() {
-      console.log("get request")
-    })
-  })
-
+      console.log("get request");
+    });
+  });
 
   $(".search-form").on("submit", function(event) {
     event.preventDefault();
 
-    const search = $("#new-listing").val();
+    const search = $("#search-bar").val();
     loadListings(-1, search);
   });
 
-
   $(".new-listing").on("submit", function(event) {
     event.preventDefault();
-    // const formdata = $(this).serializeArray();
+
+    const formdata = $(this).serializeArray();
+    const package = formdata.reduce((accu, current) => {
+      accu[current.name] = current.value;
+      return accu;
+    }, {});
+
     const search = $("#search-bar").val();
-    $.post('/listings')
 
-      .then(() => {
-
+    $.post("/listings", package)
+      .then((res) => {
         console.log("post request made");
-      }
-      )
+        window.location.reload();
+      })
+      .catch((err) => {
 
+        console.log(err);
+      });
   });
-
-
-  $(".delete").on("click", function(event) {
-    event.preventDefault();
-    // const id =
-    $.post('/listings/:id/delete')
-
-      .then(() => {
-
-        console.log("this item is deleted");
-      }
-      )
-
-
-  })
-
-
-
 });
 
-
 const loadListings = function(limit, search) {
-  const searchText = search ? `search=${search}` : '';
-  const limitText = limit ? `limit=${limit}` : '';
+  const searchText = search ? `search=${search}` : "";
+  const limitText = limit ? `limit=${limit}` : "";
 
   console.log("SearchText", searchText);
-
 
   const url = `/listings?${searchText}&${limitText}`;
   console.log("url", url);
 
-  $.get(url)
-    .then(data => {
-      renderListings(data.listings);
-    }
-    )
-}
+  $.get(url).then((data) => {
+    renderListings(data.listings);
 
+    $(".delete").on("click", function(event) {
+      event.preventDefault();
+
+      const id = event.target.dataset.id;
+      $.post(`/listings/${id}/delete`)
+        .then(() => {
+          console.log("this item is deleted");
+          window.location.reload();
+        });
+    });
+  });
+};
 
 function renderListings(listings) {
   $(`.listings_master_container`).empty();
   console.log(listings);
-
-  for (const listing of listings) {
+  const sortedListings = listings.sort((a, b) => b - a);
+  for (const listing of sortedListings) {
     const newListing = createListing(listing);
-    $(`.listings_master_container`).prepend(newListing);
+    $(`.listings_master_container`).append(newListing);
   }
 }
 
-
 function createListing(listing) {
+  console.log("LISTING", listing);
   return $(`
   <div class="listing_container">
   <h3>${listing.name}</h3>
@@ -109,16 +98,13 @@ function createListing(listing) {
       fav
     </button>
     <button class="delete"
-
+data-id = '${listing.id}'
     >
     delete
   </button>
   </div>
 </div>
   `);
-};
+}
 
-
-
-
-    // style= "display:none;"
+// style= "display:none;"
