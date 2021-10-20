@@ -69,6 +69,7 @@ app.use("/users", usersRoutes(db));
 // Separate them into separate routes files (see above).
 
 //HOME
+//!!!
 app.get("/", (req, res) => {
   if (req.session.user) {
     res.render("index");
@@ -98,6 +99,8 @@ app.post("/logout", (req, res) => {
 //LISTINGS
 app.post("/listings", (req, res) => {
   const name = req.query;
+  console.log('QUERY', req.query);
+  console.log('BODY', req.body);
   console.log("name", name);
   // const picture_url =
   //   const price =
@@ -121,7 +124,8 @@ app.post('/listings/:id/delete', (req, res) => {
 
   db.query(query)
     .then(data => {
-      console.log("added to db")
+      console.log("deleted from db")
+      res.json(data.rows);
       return app;
     })
 
@@ -146,7 +150,7 @@ app.get("/listings", (req, res) => {
   const limit = Number(req.query.limit);
   console.log("searchQuery", searchQuery);
   let query = `
-    SELECT name, picture_url, price, quantity
+    SELECT id, name, picture_url, price, quantity
     FROM listings`;
 
   if (searchQuery && searchQuery.length)

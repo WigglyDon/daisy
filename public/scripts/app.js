@@ -1,5 +1,6 @@
 
 
+
 $(document).ready(function() {
   loadListings(15);
 
@@ -33,9 +34,16 @@ $(document).ready(function() {
 
   $(".new-listing").on("submit", function(event) {
     event.preventDefault();
-    // const formdata = $(this).serializeArray();
+
+    const formdata = $(this).serializeArray();
+    const package = formdata.reduce((accu, current) => {
+
+      accu[current.name] = current.value;
+      return accu;
+    }, {})
+    debugger
     const search = $("#search-bar").val();
-    $.post('/listings')
+    $.post('/listings', package)
 
       .then(() => {
 
@@ -44,22 +52,6 @@ $(document).ready(function() {
       )
 
   });
-
-
-  $(".delete").on("click", function(event) {
-    event.preventDefault();
-    // const id =
-    $.post('/listings/:id/delete')
-
-      .then(() => {
-
-        console.log("this item is deleted");
-      }
-      )
-
-
-  })
-
 
 
 });
@@ -78,6 +70,21 @@ const loadListings = function(limit, search) {
   $.get(url)
     .then(data => {
       renderListings(data.listings);
+
+      $(".delete").on("click", function(event) {
+        event.preventDefault();
+
+        const id = event.target.dataset.id;
+        $.post(`/listings/${id}/delete`)
+
+          .then(() => {
+
+            console.log("this item is deleted");
+            window.location.reload();
+          }
+          )
+
+      })
     }
     )
 }
@@ -95,6 +102,7 @@ function renderListings(listings) {
 
 
 function createListing(listing) {
+  console.log("LISTING", listing);
   return $(`
   <div class="listing_container">
   <h3>${listing.name}</h3>
@@ -109,7 +117,7 @@ function createListing(listing) {
       fav
     </button>
     <button class="delete"
-
+data-id = '${listing.id}'
     >
     delete
   </button>
