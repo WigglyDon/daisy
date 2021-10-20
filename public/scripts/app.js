@@ -3,22 +3,24 @@ $(document).ready(function() {
 
   $(".admin_button").on("click", function(event) {
 
+    // location.reload();
+    // event.preventDefault();
     $.get(`/login`, function() {
-      console.log("get request")
-    })
-    setTimeout(function(){ location.reload(); }, 50);
-
-
-  })
+      console.log("get request");
+    });
+    setTimeout(function() { location.reload(); }, 50);
+  });
 
   $(".logout").on("click", function(event) {
-    ;
+
+    // location.reload();
 
     $.post(`/logout`, function() {
-    })
-    setTimeout(function(){ location.reload(); }, 50);
-  })
+      console.log("get request");
+    });
 
+    setTimeout(function() { location.reload(); }, 50);
+  });
 
   $(".search-form").on("submit", function(event) {
     event.preventDefault();
