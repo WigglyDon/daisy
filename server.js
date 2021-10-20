@@ -70,12 +70,11 @@ app.use("/users", usersRoutes(db));
 
 //HOME
 app.get("/", (req, res) => {
-  if (req.session.user) {
+  if (!req.session.user) {
     res.render("index");
   } else {
     res.render("admin");
   }
-
 });
 
 
@@ -84,7 +83,6 @@ app.get("/login", (req, res) => {
   req.session = {
     user: 'John'
   };
-
   res.redirect("/")
 });
 
@@ -126,20 +124,6 @@ app.post('/listings/:id/delete', (req, res) => {
     })
 
 });
-
-// app.post("/urls/:shortURL/delete", (req, res) => {
-//   if (req.session.email !== urlDatabase[req.params.shortURL].owner) {
-//     res.redirect("/urls");
-//     return;
-//   }
-//   const shortURL = req.params.shortURL;
-//   delete urlDatabase[shortURL];
-//   res.redirect(`/urls`);
-// });
-
-
-
-
 
 app.get("/listings", (req, res) => {
   const searchQuery = req.query.search;
