@@ -1,35 +1,35 @@
-$(document).ready(function() {
+$(document).ready(function () {
   loadListings(70);
 
-  $(".admin_button").on("click", function(event) {
+  $(".admin_button").on("click", function (event) {
 
     // location.reload();
     // event.preventDefault();
-    $.get(`/login`, function() {
+    $.get(`/login`, function () {
       console.log("get request");
     });
-    setTimeout(function() { location.reload(); }, 50);
+    setTimeout(function () { location.reload(); }, 50);
   });
 
-  $(".logout").on("click", function(event) {
+  $(".logout").on("click", function (event) {
 
     // location.reload();
 
-    $.post(`/logout`, function() {
+    $.post(`/logout`, function () {
       console.log("get request");
     });
 
-    setTimeout(function() { location.reload(); }, 50);
+    setTimeout(function () { location.reload(); }, 50);
   });
 
-  $(".search-form").on("submit", function(event) {
+  $(".search-form").on("submit", function (event) {
     event.preventDefault();
 
     const search = $("#search-bar").val();
     loadListings(-1, search);
   });
 
-  $(".new-listing").on("submit", function(event) {
+  $(".new-listing").on("submit", function (event) {
     event.preventDefault();
 
     const formdata = $(this).serializeArray();
@@ -52,7 +52,7 @@ $(document).ready(function() {
   });
 });
 
-const loadListings = function(limit, search) {
+const loadListings = function (limit, search) {
   const searchText = search ? `search=${search}` : "";
   const limitText = limit ? `limit=${limit}` : "";
 
@@ -64,7 +64,7 @@ const loadListings = function(limit, search) {
   $.get(url).then((data) => {
     renderListings(data.listings);
 
-    $(".delete").on("click", function(event) {
+    $(".delete").on("click", function (event) {
       event.preventDefault();
 
       const id = event.target.dataset.id;
@@ -91,16 +91,16 @@ function createListing(listing) {
   console.log("LISTING", listing);
   return $(`
   <div class="listing_container">
+
   <h3>${listing.name}</h3>
-  <h4>${listing.price}</h4>
-  <h4>${listing.quantity}</h4>
   <img src="${listing.picture_url}" alt="flower">
+  <h4 class="listing-info">$${listing.price} Quantity: ${listing.quantity}</h4>
   <div class="listing-bottom">
-    <button>
+    <button class="contact">
       <a href="mailto:someone@mozilla.org">Contact</a>
     </button>
     <button class="fav">
-      fav
+    <i class="fa fa-heart"></i>
     </button>
     <button class="delete"
 data-id = '${listing.id}'
