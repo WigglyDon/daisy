@@ -93,8 +93,8 @@ app.post("/logout", (req, res) => {
 app.post("/listings", (req, res) => {
 
   let query = `
-  INSERT INTO listings (name, picture_url, price, quantity)
-  VALUES ($1, $2, $3, $4)`;
+  INSERT INTO listings (name, picture_url, price, quantity, favorited)
+  VALUES ($1, $2, $3, $4, false)`;
   console.log(req.body);
   db.query(query, [
     req.body["listing-name"],
@@ -130,6 +130,7 @@ app.post("/listings/:id/delete", (req, res) => {
 });
 
 
+//update sql query to join the favorites table
 app.get("/listings", (req, res) => {
   const searchQuery = req.query.search;
   console.log("QUERY", req.originalUrl);
@@ -143,7 +144,7 @@ app.get("/listings", (req, res) => {
     query += ` WHERE name LIKE '%${searchQuery}%'`;
   console.log("limit", limit);
 
-  query += ` ORDER BY id DESC`;
+  query += ` ORDER BY favorited DESC, id`;
 
   if (limit > 0) query += ` LIMIT ${limit} `;
 
