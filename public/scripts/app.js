@@ -77,9 +77,10 @@ const loadListings = function (limit, search) {
       $.post(`/listings/${id}/favorited`)
         .then(() => {
           console.log('post to favorited');
+
         });
 
-
+      setTimeout(function () { location.reload(); }, 50);
     });
 
     $(".unfav").on("click", function (event) {
@@ -90,9 +91,10 @@ const loadListings = function (limit, search) {
       $.post(`/listings/${id}/unfavorited`)
         .then(() => {
           console.log('post to unfavorited');
+
         });
 
-
+      setTimeout(function () { location.reload(); }, 50);
     });
 
 

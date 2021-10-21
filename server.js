@@ -192,7 +192,7 @@ app.get("/listings", (req, res) => {
     query += ` WHERE name LIKE '%${searchQuery}%'`;
   console.log("limit", limit);
 
-  query += ` ORDER BY favorited DESC`;
+  query += ` ORDER BY favorited DESC, id`;
 
   if (limit > 0) query += ` LIMIT ${limit} `;
 
