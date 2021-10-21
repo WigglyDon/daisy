@@ -1,10 +1,9 @@
 $(document).ready(function () {
   loadListings(70);
 
+
   $(".admin_button").on("click", function (event) {
 
-    // location.reload();
-    // event.preventDefault();
     $.get(`/login`, function () {
       console.log("get request");
     });
@@ -12,8 +11,6 @@ $(document).ready(function () {
   });
 
   $(".logout").on("click", function (event) {
-
-    // location.reload();
 
     $.post(`/logout`, function () {
       console.log("get request");
@@ -58,6 +55,54 @@ const loadListings = function (limit, search) {
   $.get(url).then((data) => {
     renderListings(data.listings);
 
+
+
+
+
+
+    $(".fav").on("click", function (event) {
+      event.preventDefault();
+      const id = event.target.dataset.id;
+      console.log(id);
+
+      $.post(`/listings/${id}/favorited`)
+        .then(() => {
+          console.log('post to favorited');
+        });
+
+
+      });
+
+      $(".unfav").on("click", function (event) {
+        event.preventDefault();
+        const id = event.target.dataset.id;
+        console.log(id);
+
+        $.post(`/listings/${id}/unfavorited`)
+          .then(() => {
+            console.log('post to unfavorited');
+          });
+
+
+        });
+      // $.post(`/listings/${id}/unfavorited`)
+      // .then(() => {
+      //   $(this).css("color", "red");
+      //   setTimeout(function () { location.reload(); }, 50);
+      // });
+
+    // $.post(`/listings/${id}/favorited`)
+    //     .then(() => {
+    //       $(this).css("color", "red");
+    //       setTimeout(function () { location.reload(); }, 50);
+    //     });
+
+
+
+
+
+
+
     $(".delete").on("click", function (event) {
       event.preventDefault();
 
@@ -92,11 +137,11 @@ function createListing(listing) {
     <button class="contact">
       <a href="mailto:someone@mozilla.org">Contact</a>
     </button>
-    <button class="fav">
-    <i class="fa fa-heart"></i>
-    </button>
+    <button class="fav" data-id = '${listing.id}'>&hearts;</button>
+    <button class="unfav" data-id = '${listing.id}'>unfav</button>
+
     <button class="delete"
-data-id = '${listing.id}'
+    data-id = '${listing.id}'
     >
     delete
   </button>
