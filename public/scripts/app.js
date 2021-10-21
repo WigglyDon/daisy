@@ -1,23 +1,23 @@
-$(document).ready(function () {
+$(document).ready(function() {
   loadListings(70);
 
   // -------------------------------------
-  $(".admin_button").on("click", function (event) {
+  $(".admin_button").on("click", function(event) {
 
-    $.get(`/login/1`, function () {
+    $.get(`/login/1`, function() {
       console.log("get request");
     });
-    setTimeout(function () { location.reload(); }, 50);
+    setTimeout(function() { location.reload(); }, 50);
     // location.reload();
   });
 
-  $(".logout").on("click", function (event) {
+  $(".logout").on("click", function(event) {
 
-    $.post(`/logout`, function () {
+    $.post(`/logout`, function() {
       console.log("get request");
     });
 
-    setTimeout(function () { location.reload(); }, 50);
+    setTimeout(function() { location.reload(); }, 50);
     // location.reload();
   });
 
@@ -31,14 +31,20 @@ $(document).ready(function () {
 
 
 
-  $(".search-form").on("submit", function (event) {
-    event.preventDefault();
+  $("#search-bar").on("input", function(event) {
 
-    const search = $("#search-bar").val();
-    loadListings(-1, search);
+
+    const search = $(this).val();
+
+    loadListings(5, search);
   });
 
-  $(".new-listing").on("submit", function (event) {
+  $(".search-form").on("submit", function(event) {
+    event.preventDefault();
+  })
+
+
+  $(".new-listing").on("submit", function(event) {
     event.preventDefault();
 
     const formdata = $(this).serializeArray();
@@ -51,14 +57,14 @@ $(document).ready(function () {
 
     $.post("/listings", package)
       .then((res) => {
-        window.location.reload();
+        // window.location.reload();
       })
 
   });
 });
 // document ready end
 
-const loadListings = function (limit, search) {
+const loadListings = function(limit, search) {
   const searchText = search ? `search=${search}` : "";
   const limitText = limit ? `limit=${limit}` : "";
 
@@ -69,7 +75,7 @@ const loadListings = function (limit, search) {
     renderListings(data.listings, data.loggedInUser);
 
 
-    $(".fav").on("click", function (event) {
+    $(".fav").off("click").on("click", function(event) {
       event.preventDefault();
       const id = event.target.dataset.id;
       console.log(id);
@@ -80,10 +86,10 @@ const loadListings = function (limit, search) {
 
         });
 
-      setTimeout(function () { location.reload(); }, 50);
+      setTimeout(function() { location.reload(); }, 50);
     });
 
-    $(".unfav").on("click", function (event) {
+    $(".unfav").off("click").on("click", function(event) {
       event.preventDefault();
       const id = event.target.dataset.id;
       console.log(id);
@@ -94,7 +100,7 @@ const loadListings = function (limit, search) {
 
         });
 
-      setTimeout(function () { location.reload(); }, 50);
+      setTimeout(function() { location.reload(); }, 50);
     });
 
 
@@ -102,7 +108,7 @@ const loadListings = function (limit, search) {
 
 
 
-    $(".delete").on("click", function (event) {
+    $(".delete").on("click", function(event) {
       event.preventDefault();
 
       const id = event.target.dataset.id;

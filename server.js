@@ -194,7 +194,7 @@ app.get("/listings", (req, res) => {
 
   query += ` ORDER BY favorited DESC, id`;
 
-  //LOWER()
+
   if (limit > 0) query += ` LIMIT ${limit} `;
 
   db.query(query)
