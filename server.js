@@ -93,8 +93,8 @@ app.post("/logout", (req, res) => {
 app.post("/listings", (req, res) => {
 
   let query = `
-  INSERT INTO listings (name, picture_url, price, quantity)
-  VALUES ($1, $2, $3, $4)`;
+  INSERT INTO listings (name, picture_url, price, quantity, favorited)
+  VALUES ($1, $2, $3, $4, false)`;
   console.log(req.body);
   db.query(query, [
     req.body["listing-name"],
@@ -106,13 +106,46 @@ app.post("/listings", (req, res) => {
     res.json({});
   })
 
-  .catch((err) => {
-    debugger
-    console.log('error 1');
-    console.log(err);
-    res.status(500).json({ error: err.message });
-  });
+    .catch((err) => {
+      debugger
+      console.log('error 1');
+      console.log(err);
+      res.status(500).json({ error: err.message });
+    });
 });
+
+app.post("/listings/:id/favorited", (req, res) => {
+  const id = req.params.id;
+  let query = `
+  UPDATE listings
+  SET favorited = TRUE
+  WHERE id = ${id};`;
+
+  db.query(query).then((data) => {
+    res.json({});
+  })
+    .catch((err) => {
+      console.log('error 2');
+      res.status(500).json({ error: err.message });
+    });
+});
+
+app.post("/listings/:id/unfavorited", (req, res) => {
+  const id = req.params.id;
+  let query = `
+  UPDATE listings
+  SET favorited = FALSE
+  WHERE id = ${id};`;
+
+  db.query(query).then((data) => {
+    res.json({});
+  })
+    .catch((err) => {
+      console.log('error 2');
+      res.status(500).json({ error: err.message });
+    });
+});
+
 
 app.post("/listings/:id/delete", (req, res) => {
   const id = req.params.id;
@@ -123,13 +156,14 @@ app.post("/listings/:id/delete", (req, res) => {
     console.log("deleted from db");
     res.json({});
   })
-  .catch((err) => {
-    console.log('error 2');
-    res.status(500).json({ error: err.message });
-  });
+    .catch((err) => {
+      console.log('error 2');
+      res.status(500).json({ error: err.message });
+    });
 });
 
 
+//update sql query to join the favorites table
 app.get("/listings", (req, res) => {
   const searchQuery = req.query.search;
   console.log("QUERY", req.originalUrl);
@@ -143,7 +177,7 @@ app.get("/listings", (req, res) => {
     query += ` WHERE name LIKE '%${searchQuery}%'`;
   console.log("limit", limit);
 
-  query += ` ORDER BY id DESC`;
+  query += ` ORDER BY favorited DESC, id`;
 
   if (limit > 0) query += ` LIMIT ${limit} `;
 
@@ -164,3 +198,8 @@ app.get("/listings", (req, res) => {
 app.listen(PORT, () => {
   console.log(`DAISY on port ${PORT} ! :)`);
 });
+
+
+// UPDATE listings
+// SET favorited = TRUE
+// WHERE id = ${id};
