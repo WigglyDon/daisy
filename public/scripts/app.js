@@ -1,26 +1,35 @@
 $(document).ready(function () {
   loadListings(70);
 
+// -------------------------------------
   $(".admin_button").on("click", function (event) {
 
-    // location.reload();
-    // event.preventDefault();
-    $.get(`/login`, function () {
+    $.get(`/login/1`, function () {
       console.log("get request");
     });
     setTimeout(function () { location.reload(); }, 50);
+    // location.reload();
   });
 
   $(".logout").on("click", function (event) {
-
-    // location.reload();
 
     $.post(`/logout`, function () {
       console.log("get request");
     });
 
     setTimeout(function () { location.reload(); }, 50);
+    // location.reload();
   });
+
+
+
+
+
+// -------------------------------------
+
+
+
+
 
   $(".search-form").on("submit", function (event) {
     event.preventDefault();
@@ -51,6 +60,7 @@ $(document).ready(function () {
       });
   });
 });
+// document ready end
 
 const loadListings = function (limit, search) {
   const searchText = search ? `search=${search}` : "";
@@ -62,7 +72,39 @@ const loadListings = function (limit, search) {
   console.log("url", url);
 
   $.get(url).then((data) => {
-    renderListings(data.listings);
+    renderListings(data.listings, data.loggedInUser);
+
+
+    $(".fav").on("click", function (event) {
+      event.preventDefault();
+      const id = event.target.dataset.id;
+      console.log(id);
+
+      $.post(`/listings/${id}/favorited`)
+        .then(() => {
+          console.log('post to favorited');
+        });
+
+
+      });
+
+      $(".unfav").on("click", function (event) {
+        event.preventDefault();
+        const id = event.target.dataset.id;
+        console.log(id);
+
+        $.post(`/listings/${id}/unfavorited`)
+          .then(() => {
+            console.log('post to unfavorited');
+          });
+
+
+        });
+
+
+
+
+
 
     $(".delete").on("click", function (event) {
       event.preventDefault();
@@ -77,18 +119,24 @@ const loadListings = function (limit, search) {
   });
 };
 
-function renderListings(listings) {
+function renderListings(listings, loggedInUser) {
   $(`.listings_master_container`).empty();
   console.log(listings);
   const sortedListings = listings.sort((a, b) => b - a);
   for (const listing of sortedListings) {
-    const newListing = createListing(listing);
+    const newListing = createListing(listing, loggedInUser);
     $(`.listings_master_container`).append(newListing);
   }
 }
 
-function createListing(listing) {
-  console.log("LISTING", listing);
+function createListing(listing, loggedInUser) {
+  const contactButton = `<button class="contact">
+ <a href="mailto:someone@mozilla.org">Contact</a>
+    </button>
+  `
+  const deleteButton = `
+  <button class="delete" data-id='${listing.id}'>delete</button>
+  `
   return $(`
   <div class="listing_container">
   <h3>${listing.name}</h3>
@@ -96,6 +144,7 @@ function createListing(listing) {
   <h4>${listing.quantity}</h4>
   <img src="${listing.picture_url}" alt="flower">
   <div class="listing-bottom">
+<<<<<<< HEAD
     <button>
       <a href="mailto:someone@mozilla.org">Contact</a>
     </button>
@@ -107,9 +156,27 @@ data-id = '${listing.id}'
     >
     delete
   </button>
+=======
+    ${contactButton}
+    <button class="fav" data-id = '${listing.id}'>&hearts;</button>
+    <button class="unfav" data-id='${listing.id}'>unfav</button>
+
+    ${loggedInUser?deleteButton:''}
+
+
+>>>>>>> master
   </div>
 </div>
   `);
 }
 
 // style= "display:none;"
+
+
+
+
+
+
+
+
+

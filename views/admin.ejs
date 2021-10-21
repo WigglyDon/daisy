@@ -19,11 +19,20 @@
 <body>
   <header>
     <h1>Daisy</h1>
+
+    <div><%= user %></div>
+
+
     <div class="nav-btn">
-      <button class="admin_button">Make Admin</button>
-      <button class="logout">Remove Admin</button>
+      <button class="logout">Logout</button>
     </div>
+
+
   </header>
+
+  <form class="search-form" method="GET" action="/listings" autocomplete="on">
+    <input type="text" id="search-bar" name="search-bar" placeholder="WARNING ima search lol">
+  </form>
 
   <form class="new-listing" action="#">
     <label for="listing-name">Listing Name:</label><br>
@@ -40,8 +49,11 @@
 
 
   <main>
+    <button class="admin_button">Login</button>
+    <div class="listings_master_container">
 
-    <div class="listings_master_container"></div>
+
+    </div>
 
   </main>
 
