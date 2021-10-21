@@ -12,7 +12,7 @@ const cookieSession = require("cookie-session");
 app.use(
   cookieSession({
     name: "COOKIE",
-    // keys: ['test'],
+    keys: ['test'],
     signed: false,
     maxAge: 24 * 60 * 60 * 100,
   })
@@ -76,8 +76,16 @@ app.get("/", (req, res) => {
 
 //LOGIN
 app.get("/login", (req, res) => {
+
+  const johns_database_name =
+  `
+  SELECT name
+  FROM users
+  WHERE name = 'John'
+  `;
+
   req.session = {
-    user: "John",
+    user: johns_database_name,
   };
 
   res.redirect("/");
@@ -93,8 +101,8 @@ app.post("/logout", (req, res) => {
 app.post("/listings", (req, res) => {
 
   let query = `
-  INSERT INTO listings (name, picture_url, price, quantity, favorited)
-  VALUES ($1, $2, $3, $4, false)`;
+  INSERT INTO listings (name, picture_url, price, quantity)
+  VALUES ($1, $2, $3, $4)`;
   console.log(req.body);
   db.query(query, [
     req.body["listing-name"],
@@ -114,37 +122,37 @@ app.post("/listings", (req, res) => {
     });
 });
 
-app.post("/listings/:id/favorited", (req, res) => {
-  const id = req.params.id;
-  let query = `
-  UPDATE listings
-  SET favorited = TRUE
-  WHERE id = ${id};`;
+// app.post("/listings/:id/favorited", (req, res) => {
+//   const id = req.params.id;
+//   let query = `
+//   UPDATE listings
+//   SET favorited = TRUE
+//   WHERE id = ${id};`;
 
-  db.query(query).then((data) => {
-    res.json({});
-  })
-    .catch((err) => {
-      console.log('error 2');
-      res.status(500).json({ error: err.message });
-    });
-});
+//   db.query(query).then((data) => {
+//     res.json({});
+//   })
+//     .catch((err) => {
+//       console.log('error 2');
+//       res.status(500).json({ error: err.message });
+//     });
+// });
 
-app.post("/listings/:id/unfavorited", (req, res) => {
-  const id = req.params.id;
-  let query = `
-  UPDATE listings
-  SET favorited = FALSE
-  WHERE id = ${id};`;
+// app.post("/listings/:id/unfavorited", (req, res) => {
+//   const id = req.params.id;
+//   let query = `
+//   UPDATE listings
+//   SET favorited = FALSE
+//   WHERE id = ${id};`;
 
-  db.query(query).then((data) => {
-    res.json({});
-  })
-    .catch((err) => {
-      console.log('error 2');
-      res.status(500).json({ error: err.message });
-    });
-});
+//   db.query(query).then((data) => {
+//     res.json({});
+//   })
+//     .catch((err) => {
+//       console.log('error 2');
+//       res.status(500).json({ error: err.message });
+//     });
+// });
 
 
 app.post("/listings/:id/delete", (req, res) => {
@@ -177,7 +185,7 @@ app.get("/listings", (req, res) => {
     query += ` WHERE name LIKE '%${searchQuery}%'`;
   console.log("limit", limit);
 
-  query += ` ORDER BY favorited DESC, id`;
+  query += ` ORDER BY id`;
 
   if (limit > 0) query += ` LIMIT ${limit} `;
 

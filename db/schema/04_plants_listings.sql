@@ -5,6 +5,5 @@ CREATE TABLE listings (
   name VARCHAR(255) NOT NULL,
   picture_url VARCHAR(255) NOT NULL,
   price INTEGER,
-  quantity INTEGER,
-  favorited BOOLEAN
+  quantity INTEGER
 )

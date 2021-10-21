@@ -1,7 +1,7 @@
 $(document).ready(function () {
   loadListings(70);
 
-
+// -------------------------------------
   $(".admin_button").on("click", function (event) {
 
     $.get(`/login`, function () {
@@ -18,6 +18,16 @@ $(document).ready(function () {
 
     setTimeout(function () { location.reload(); }, 50);
   });
+
+
+
+
+
+// -------------------------------------
+
+
+
+
 
   $(".search-form").on("submit", function (event) {
     event.preventDefault();
@@ -151,3 +161,12 @@ function createListing(listing) {
 }
 
 // style= "display:none;"
+
+
+
+
+
+
+
+
+
