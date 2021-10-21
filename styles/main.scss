@@ -154,3 +154,12 @@ header{
 //  .delete {
 //    display: none
 //  }
+
+.title-top{
+  display: flex;
+  align-items: end;
+  h6{
+    padding-left: 1em;
+  }
+}
+
