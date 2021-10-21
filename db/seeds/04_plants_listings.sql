@@ -1,4 +1,4 @@
--- INSERT INTO listings (name, picture_url, price, quantity, favorited) VALUES ('tomatoes', 'https://www.almanac.com/sites/default/files/image_nodes/tomatoes_helios4eos_gettyimages-edit.jpeg', 10, 4, FALSE);
+-- INSERT INTO listings (name, picture_url, price, quantity) VALUES ('tomatoes', 'https://www.almanac.com/sites/default/files/image_nodes/tomatoes_helios4eos_gettyimages-edit.jpeg', 10, 4);
 
 INSERT INTO listings (name, picture_url, price, quantity, favorited) VALUES ('daisies', 'https://m.media-amazon.com/images/I/71cKjCfYU7L._AC_SL1000_.jpg', 4, 7, FALSE);
 

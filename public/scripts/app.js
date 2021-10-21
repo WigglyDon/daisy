@@ -1,13 +1,14 @@
 $(document).ready(function () {
   loadListings(70);
 
-
+// -------------------------------------
   $(".admin_button").on("click", function (event) {
 
-    $.get(`/login`, function () {
+    $.get(`/login/1`, function () {
       console.log("get request");
     });
     setTimeout(function () { location.reload(); }, 50);
+    // location.reload();
   });
 
   $(".logout").on("click", function (event) {
@@ -17,7 +18,18 @@ $(document).ready(function () {
     });
 
     setTimeout(function () { location.reload(); }, 50);
+    // location.reload();
   });
+
+
+
+
+
+// -------------------------------------
+
+
+
+
 
   $(".search-form").on("submit", function (event) {
     event.preventDefault();
@@ -44,6 +56,7 @@ $(document).ready(function () {
 
   });
 });
+// document ready end
 
 const loadListings = function (limit, search) {
   const searchText = search ? `search=${search}` : "";
@@ -53,11 +66,7 @@ const loadListings = function (limit, search) {
 
 
   $.get(url).then((data) => {
-    renderListings(data.listings);
-
-
-
-
+    renderListings(data.listings, data.loggedInUser);
 
 
     $(".fav").on("click", function (event) {
@@ -85,18 +94,6 @@ const loadListings = function (limit, search) {
 
 
         });
-      // $.post(`/listings/${id}/unfavorited`)
-      // .then(() => {
-      //   $(this).css("color", "red");
-      //   setTimeout(function () { location.reload(); }, 50);
-      // });
-
-    // $.post(`/listings/${id}/favorited`)
-    //     .then(() => {
-    //       $(this).css("color", "red");
-    //       setTimeout(function () { location.reload(); }, 50);
-    //     });
-
 
 
 
@@ -115,18 +112,24 @@ const loadListings = function (limit, search) {
   });
 };
 
-function renderListings(listings) {
+function renderListings(listings, loggedInUser) {
   $(`.listings_master_container`).empty();
   console.log(listings);
   const sortedListings = listings.sort((a, b) => b - a);
   for (const listing of sortedListings) {
-    const newListing = createListing(listing);
+    const newListing = createListing(listing, loggedInUser);
     $(`.listings_master_container`).append(newListing);
   }
 }
 
-function createListing(listing) {
-  console.log("LISTING", listing);
+function createListing(listing, loggedInUser) {
+  const contactButton = `<button class="contact">
+ <a href="mailto:someone@mozilla.org">Contact</a>
+    </button>
+  `
+  const deleteButton = `
+  <button class="delete" data-id='${listing.id}'>delete</button>
+  `
   return $(`
   <div class="listing_container">
 
@@ -134,20 +137,25 @@ function createListing(listing) {
   <img src="${listing.picture_url}" alt="flower">
   <h4 class="listing-info">$${listing.price} Quantity: ${listing.quantity}</h4>
   <div class="listing-bottom">
-    <button class="contact">
-      <a href="mailto:someone@mozilla.org">Contact</a>
-    </button>
+    ${contactButton}
     <button class="fav" data-id = '${listing.id}'>&hearts;</button>
-    <button class="unfav" data-id = '${listing.id}'>unfav</button>
+    <button class="unfav" data-id='${listing.id}'>unfav</button>
 
-    <button class="delete"
-    data-id = '${listing.id}'
-    >
-    delete
-  </button>
+    ${loggedInUser?deleteButton:''}
+
+
   </div>
 </div>
   `);
 }
 
 // style= "display:none;"
+
+
+
+
+
+
+
+
+

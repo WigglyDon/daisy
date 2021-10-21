@@ -12,7 +12,7 @@ const cookieSession = require("cookie-session");
 app.use(
   cookieSession({
     name: "COOKIE",
-    // keys: ['test'],
+    keys: ['test'],
     signed: false,
     maxAge: 24 * 60 * 60 * 100,
   })
@@ -67,20 +67,36 @@ app.use("/users", usersRoutes(db));
 //HOME
 //!!!
 app.get("/", (req, res) => {
-  if (!req.session.user) {
-    res.render("index");
-  } else {
-    res.render("admin");
-  }
+  const object = {
+    user: req.session.user
+  };
+
+  res.render("index", object);
+
 });
 
 //LOGIN
-app.get("/login", (req, res) => {
-  req.session = {
-    user: "John",
-  };
+app.get("/login/:id", (req, res) => {
 
-  res.redirect("/");
+
+  const query =
+    `
+  SELECT name
+  FROM users
+  WHERE id = ${req.params.id}
+  `;
+
+  db.query(query).then((data) => {
+    req.session = {
+      user: data.rows[0].name,
+    };
+    res.redirect("/");
+  })
+
+  // const word = true ? 'apple' : orange;
+
+
+
 });
 
 ///LOGOUT
@@ -102,8 +118,9 @@ app.post("/listings", (req, res) => {
     req.body["price"],
     req.body["quantity"],
   ]).then((data) => {
-
+    // console.log(data)
     res.json({});
+
   })
 
     .catch((err) => {
@@ -166,9 +183,7 @@ app.post("/listings/:id/delete", (req, res) => {
 //update sql query to join the favorites table
 app.get("/listings", (req, res) => {
   const searchQuery = req.query.search;
-  console.log("QUERY", req.originalUrl);
   const limit = Number(req.query.limit);
-  console.log("searchQuery", searchQuery);
   let query = `
     SELECT id, name, picture_url, price, quantity
     FROM listings`;
@@ -177,17 +192,16 @@ app.get("/listings", (req, res) => {
     query += ` WHERE name LIKE '%${searchQuery}%'`;
   console.log("limit", limit);
 
-  query += ` ORDER BY favorited DESC, id`;
+  query += ` ORDER BY id`;
 
   if (limit > 0) query += ` LIMIT ${limit} `;
 
-  console.log("query = ", query);
-
   db.query(query)
     .then((data) => {
-
       const listings = data.rows;
-      res.json({ listings });
+      res.json({
+        listings,
+        loggedInUser : req.session.user });
     })
     .catch((err) => {
       console.log('error 3');

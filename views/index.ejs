@@ -10,30 +10,62 @@
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
   <link rel="stylesheet" href="/styles/main.css" type="text/css" />
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
-  <link rel="stylesheet" href="/styles/testing.css" type="text/css" />
 
   <script src="https://kit.fontawesome.com/6293710e3d.js" crossorigin="anonymous"></script>
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-
   <script type="text/javascript" src="/scripts/app.js"></script>
 </head>
 
 <body>
   <header>
     <h1>Daisy</h1>
+
+
+    <div><%= user %></div>
+
+
     <div class="nav-btn">
-      <button class="admin_button">Make Admin</button>
-      <button class="logout">Remove Admin</button>
+      <%    if (user)  {                                      %>
+               <button class="logout">Logout</button>
+      <%       } else {                                        %>
+             <button class="admin_button">Login</button>
+      <%       }                                              %>
+
+
     </div>
+
+
   </header>
 
   <form class="search-form" method="GET" action="/listings" autocomplete="on">
-    <input type="text" id="search-bar" name="search-bar" placeholder="search">
+    <input type="text" id="search-bar" name="search-bar" placeholder="WARNING ima search lol">
   </form>
+
+
+  <%    if (user)  {                                      %>
+    <form class="new-listing" action="#">
+      <label for="listing-name">Listing Name:</label><br>
+      <input type="text" id="listing-name" name="listing-name"><br>
+      <label for="img-url">Image URL:</label> <br>
+      <input type="text" id="img-url" name="img-url"><br>
+      <label for="price">Price:</label> <br>
+      <input type="number" id="price" name="price"> <br>
+      <label for="quantity">Quantity:</label> <br>
+      <input type="number" id="quantity" name="quantity"> <br>
+      <input type="submit" value="Submit"> <br>
+    </form>
+<%       }                                        %>
+
+
+
+
 
   <main>
 
-    <div class="listings_master_container"></div>
+    <div class="listings_master_container">
+
+
+    </div>
 
   </main>
 
