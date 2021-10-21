@@ -42,9 +42,13 @@ $(document).ready(function () {
 
     $.post("/listings", package)
       .then((res) => {
+        console.log("post request made");
         window.location.reload();
       })
+      .catch((err) => {
 
+        console.log(err);
+      });
   });
 });
 
@@ -52,8 +56,10 @@ const loadListings = function (limit, search) {
   const searchText = search ? `search=${search}` : "";
   const limitText = limit ? `limit=${limit}` : "";
 
-  const url = `/listings?${searchText}&${limitText}`;
+  console.log("SearchText", searchText);
 
+  const url = `/listings?${searchText}&${limitText}`;
+  console.log("url", url);
 
   $.get(url).then((data) => {
     renderListings(data.listings);
@@ -64,6 +70,7 @@ const loadListings = function (limit, search) {
       const id = event.target.dataset.id;
       $.post(`/listings/${id}/delete`)
         .then(() => {
+          console.log("this item is deleted");
           window.location.reload();
         });
     });
@@ -84,16 +91,16 @@ function createListing(listing) {
   console.log("LISTING", listing);
   return $(`
   <div class="listing_container">
-
   <h3>${listing.name}</h3>
+  <h4>${listing.price}</h4>
+  <h4>${listing.quantity}</h4>
   <img src="${listing.picture_url}" alt="flower">
-  <h4 class="listing-info">$${listing.price} Quantity: ${listing.quantity}</h4>
   <div class="listing-bottom">
-    <button class="contact">
+    <button>
       <a href="mailto:someone@mozilla.org">Contact</a>
     </button>
     <button class="fav">
-    <i class="fa fa-heart"></i>
+      fav
     </button>
     <button class="delete"
 data-id = '${listing.id}'
