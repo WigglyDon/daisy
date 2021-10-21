@@ -1,7 +1,7 @@
 $(document).ready(function () {
   loadListings(70);
 
-// -------------------------------------
+  // -------------------------------------
   $(".admin_button").on("click", function (event) {
 
     $.get(`/login/1`, function () {
@@ -25,7 +25,7 @@ $(document).ready(function () {
 
 
 
-// -------------------------------------
+  // -------------------------------------
 
 
 
@@ -80,20 +80,20 @@ const loadListings = function (limit, search) {
         });
 
 
-      });
+    });
 
-      $(".unfav").on("click", function (event) {
-        event.preventDefault();
-        const id = event.target.dataset.id;
-        console.log(id);
+    $(".unfav").on("click", function (event) {
+      event.preventDefault();
+      const id = event.target.dataset.id;
+      console.log(id);
 
-        $.post(`/listings/${id}/unfavorited`)
-          .then(() => {
-            console.log('post to unfavorited');
-          });
-
-
+      $.post(`/listings/${id}/unfavorited`)
+        .then(() => {
+          console.log('post to unfavorited');
         });
+
+
+    });
 
 
 
@@ -138,10 +138,10 @@ function createListing(listing, loggedInUser) {
   <h4 class="listing-info">$${listing.price} Quantity: ${listing.quantity}</h4>
   <div class="listing-bottom">
     ${contactButton}
-    <button class="fav" data-id = '${listing.id}'>&hearts;</button>
-    <button class="unfav" data-id='${listing.id}'>unfav</button>
+    <button class="fav" data-id = '${listing.id}'>❤️</button>
+    <button class="unfav" data-id='${listing.id}'>&#128148;</button>
 
-    ${loggedInUser?deleteButton:''}
+    ${loggedInUser ? deleteButton : ''}
 
 
   </div>
