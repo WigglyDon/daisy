@@ -1,7 +1,9 @@
-DROP TABLE IF EXISTS users_favorites;
+DROP TABLE IF EXISTS users_favorites CASCADE;
 
 CREATE TABLE users_favorites (
   id SERIAL PRIMARY KEY NOT NULL,
+
+  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
   listing_id INTEGER REFERENCES listings(id) ON DELETE CASCADE
 
 )
