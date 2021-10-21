@@ -4,10 +4,11 @@ $(document).ready(function () {
 // -------------------------------------
   $(".admin_button").on("click", function (event) {
 
-    $.get(`/login`, function () {
+    $.get(`/login/1`, function () {
       console.log("get request");
     });
     setTimeout(function () { location.reload(); }, 50);
+    // location.reload();
   });
 
   $(".logout").on("click", function (event) {
@@ -17,6 +18,7 @@ $(document).ready(function () {
     });
 
     setTimeout(function () { location.reload(); }, 50);
+    // location.reload();
   });
 
 
@@ -54,6 +56,7 @@ $(document).ready(function () {
 
   });
 });
+// document ready end
 
 const loadListings = function (limit, search) {
   const searchText = search ? `search=${search}` : "";
@@ -136,7 +139,10 @@ function renderListings(listings) {
 }
 
 function createListing(listing) {
-  console.log("LISTING", listing);
+  const contactButton = `<button class="contact">
+ <a href="mailto:someone@mozilla.org">Contact</a>
+    </button>
+  `
   return $(`
   <div class="listing_container">
 
@@ -144,17 +150,13 @@ function createListing(listing) {
   <img src="${listing.picture_url}" alt="flower">
   <h4 class="listing-info">$${listing.price} Quantity: ${listing.quantity}</h4>
   <div class="listing-bottom">
-    <button class="contact">
-      <a href="mailto:someone@mozilla.org">Contact</a>
-    </button>
+    ${contactButton}
     <button class="fav" data-id = '${listing.id}'>&hearts;</button>
-    <button class="unfav" data-id = '${listing.id}'>unfav</button>
+    <button class="unfav" data-id='${listing.id}'>unfav</button>
 
-    <button class="delete"
-    data-id = '${listing.id}'
-    >
-    delete
-  </button>
+
+    <button class="delete" data-id='${listing.id}'>delete</button>
+
   </div>
 </div>
   `);

@@ -67,28 +67,36 @@ app.use("/users", usersRoutes(db));
 //HOME
 //!!!
 app.get("/", (req, res) => {
-  if (!req.session.user) {
-    res.render("index");
-  } else {
-    res.render("admin");
-  }
+  const object = {
+    user: req.session.user
+  };
+
+  res.render("index", object);
+
 });
 
 //LOGIN
-app.get("/login", (req, res) => {
+app.get("/login/:id", (req, res) => {
 
-  const johns_database_name =
-  `
+
+  const query =
+    `
   SELECT name
   FROM users
-  WHERE name = 'John'
+  WHERE id = ${req.params.id}
   `;
 
-  req.session = {
-    user: johns_database_name,
-  };
+  db.query(query).then((data) => {
+    req.session = {
+      user: data.rows[0].name,
+    };
+    res.redirect("/");
+  })
 
-  res.redirect("/");
+  // const word = true ? 'apple' : orange;
+
+
+
 });
 
 ///LOGOUT
@@ -110,8 +118,9 @@ app.post("/listings", (req, res) => {
     req.body["price"],
     req.body["quantity"],
   ]).then((data) => {
-
+    // console.log(data)
     res.json({});
+
   })
 
     .catch((err) => {
