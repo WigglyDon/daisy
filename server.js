@@ -110,7 +110,7 @@ app.post("/listings", (req, res) => {
 
   let query = `
   INSERT INTO listings (name, picture_url, price, quantity, favorited)
-  VALUES ($1, $2, $3, $4, false)`;
+  VALUES ($1, $2, $3, $4, FALSE)`;
   console.log(req.body);
   db.query(query, [
     req.body["listing-name"],
@@ -136,7 +136,7 @@ app.post("/listings/:id/favorited", (req, res) => {
   let query = `
   UPDATE listings
   SET favorited = TRUE
-  WHERE id = ${id};`;
+  WHERE id = ${id}`;
 
   db.query(query).then((data) => {
     res.json({});
@@ -192,7 +192,7 @@ app.get("/listings", (req, res) => {
     query += ` WHERE name LIKE '%${searchQuery}%'`;
   console.log("limit", limit);
 
-  query += ` ORDER BY id`;
+  query += ` ORDER BY favorited DESC, id`;
 
   if (limit > 0) query += ` LIMIT ${limit} `;
 
@@ -201,7 +201,8 @@ app.get("/listings", (req, res) => {
       const listings = data.rows;
       res.json({
         listings,
-        loggedInUser : req.session.user });
+        loggedInUser: req.session.user
+      });
     })
     .catch((err) => {
       console.log('error 3');

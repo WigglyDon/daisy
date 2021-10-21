@@ -8,7 +8,7 @@ color:  #4d4d4d;
   flex-wrap: wrap;
   justify-content: center;
 }
-.listing_container{
+.listing_container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -105,7 +105,7 @@ header{
 }
 
 .listing-info{
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 .nav-btn{
@@ -131,6 +131,24 @@ header{
  }
  .delete:hover{
   color: lightgrey;
+ }
+ .fav{
+   color: red;
+   font-size: 25px
+ }
+ .fav:hover{
+  border: none;
+  background-color: inherit;
+  background-color: lightgrey;
+ }
+ .unfav{
+  border: none;
+  background-color: inherit;
+  font-size: 27px;
+  border-radius: 5px;
+ }
+ .unfav:hover{
+  background-color: lightgrey;
  }
 
 //  .delete {
