@@ -109,8 +109,8 @@ app.post("/logout", (req, res) => {
 app.post("/listings", (req, res) => {
 
   let query = `
-  INSERT INTO listings (name, picture_url, price, quantity)
-  VALUES ($1, $2, $3, $4)`;
+  INSERT INTO listings (name, picture_url, price, quantity, favorited)
+  VALUES ($1, $2, $3, $4, false)`;
   console.log(req.body);
   db.query(query, [
     req.body["listing-name"],
@@ -131,37 +131,37 @@ app.post("/listings", (req, res) => {
     });
 });
 
-// app.post("/listings/:id/favorited", (req, res) => {
-//   const id = req.params.id;
-//   let query = `
-//   UPDATE listings
-//   SET favorited = TRUE
-//   WHERE id = ${id};`;
+app.post("/listings/:id/favorited", (req, res) => {
+  const id = req.params.id;
+  let query = `
+  UPDATE listings
+  SET favorited = TRUE
+  WHERE id = ${id};`;
 
-//   db.query(query).then((data) => {
-//     res.json({});
-//   })
-//     .catch((err) => {
-//       console.log('error 2');
-//       res.status(500).json({ error: err.message });
-//     });
-// });
+  db.query(query).then((data) => {
+    res.json({});
+  })
+    .catch((err) => {
+      console.log('error 2');
+      res.status(500).json({ error: err.message });
+    });
+});
 
-// app.post("/listings/:id/unfavorited", (req, res) => {
-//   const id = req.params.id;
-//   let query = `
-//   UPDATE listings
-//   SET favorited = FALSE
-//   WHERE id = ${id};`;
+app.post("/listings/:id/unfavorited", (req, res) => {
+  const id = req.params.id;
+  let query = `
+  UPDATE listings
+  SET favorited = FALSE
+  WHERE id = ${id};`;
 
-//   db.query(query).then((data) => {
-//     res.json({});
-//   })
-//     .catch((err) => {
-//       console.log('error 2');
-//       res.status(500).json({ error: err.message });
-//     });
-// });
+  db.query(query).then((data) => {
+    res.json({});
+  })
+    .catch((err) => {
+      console.log('error 2');
+      res.status(500).json({ error: err.message });
+    });
+});
 
 
 app.post("/listings/:id/delete", (req, res) => {
@@ -183,9 +183,7 @@ app.post("/listings/:id/delete", (req, res) => {
 //update sql query to join the favorites table
 app.get("/listings", (req, res) => {
   const searchQuery = req.query.search;
-  console.log("QUERY", req.originalUrl);
   const limit = Number(req.query.limit);
-  console.log("searchQuery", searchQuery);
   let query = `
     SELECT id, name, picture_url, price, quantity
     FROM listings`;
@@ -198,13 +196,12 @@ app.get("/listings", (req, res) => {
 
   if (limit > 0) query += ` LIMIT ${limit} `;
 
-  console.log("query = ", query);
-
   db.query(query)
     .then((data) => {
-
       const listings = data.rows;
-      res.json({ listings });
+      res.json({
+        listings,
+        loggedInUser : req.session.user });
     })
     .catch((err) => {
       console.log('error 3');

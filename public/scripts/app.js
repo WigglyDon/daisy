@@ -66,11 +66,7 @@ const loadListings = function (limit, search) {
 
 
   $.get(url).then((data) => {
-    renderListings(data.listings);
-
-
-
-
+    renderListings(data.listings, data.loggedInUser);
 
 
     $(".fav").on("click", function (event) {
@@ -98,18 +94,6 @@ const loadListings = function (limit, search) {
 
 
         });
-      // $.post(`/listings/${id}/unfavorited`)
-      // .then(() => {
-      //   $(this).css("color", "red");
-      //   setTimeout(function () { location.reload(); }, 50);
-      // });
-
-    // $.post(`/listings/${id}/favorited`)
-    //     .then(() => {
-    //       $(this).css("color", "red");
-    //       setTimeout(function () { location.reload(); }, 50);
-    //     });
-
 
 
 
@@ -128,20 +112,23 @@ const loadListings = function (limit, search) {
   });
 };
 
-function renderListings(listings) {
+function renderListings(listings, loggedInUser) {
   $(`.listings_master_container`).empty();
   console.log(listings);
   const sortedListings = listings.sort((a, b) => b - a);
   for (const listing of sortedListings) {
-    const newListing = createListing(listing);
+    const newListing = createListing(listing, loggedInUser);
     $(`.listings_master_container`).append(newListing);
   }
 }
 
-function createListing(listing) {
+function createListing(listing, loggedInUser) {
   const contactButton = `<button class="contact">
  <a href="mailto:someone@mozilla.org">Contact</a>
     </button>
+  `
+  const deleteButton = `
+  <button class="delete" data-id='${listing.id}'>delete</button>
   `
   return $(`
   <div class="listing_container">
@@ -154,8 +141,8 @@ function createListing(listing) {
     <button class="fav" data-id = '${listing.id}'>&hearts;</button>
     <button class="unfav" data-id='${listing.id}'>unfav</button>
 
+    ${loggedInUser?deleteButton:''}
 
-    <button class="delete" data-id='${listing.id}'>delete</button>
 
   </div>
 </div>
