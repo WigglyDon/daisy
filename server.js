@@ -185,7 +185,7 @@ app.get("/listings", (req, res) => {
   const searchQuery = req.query.search;
   const limit = Number(req.query.limit);
   let query = `
-    SELECT id, name, picture_url, price, quantity
+    SELECT id, name, picture_url, price, quantity, favorited
     FROM listings`;
 
   if (searchQuery && searchQuery.length)

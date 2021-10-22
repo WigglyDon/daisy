@@ -1,23 +1,23 @@
-$(document).ready(function() {
-  loadListings(70);
+$(document).ready(function () {
+  loadListings(12);
 
   // -------------------------------------
-  $(".admin_button").on("click", function(event) {
+  $(".admin_button").on("click", function (event) {
 
-    $.get(`/login/1`, function() {
+    $.get(`/login/1`, function () {
       console.log("get request");
     });
-    setTimeout(function() { location.reload(); }, 50);
+    setTimeout(function () { location.reload(); }, 50);
     // location.reload();
   });
 
-  $(".logout").on("click", function(event) {
+  $(".logout").on("click", function (event) {
 
-    $.post(`/logout`, function() {
+    $.post(`/logout`, function () {
       console.log("get request");
     });
 
-    setTimeout(function() { location.reload(); }, 50);
+    setTimeout(function () { location.reload(); }, 50);
     // location.reload();
   });
 
@@ -31,20 +31,20 @@ $(document).ready(function() {
 
 
 
-  $("#search-bar").on("input", function(event) {
+  $("#search-bar").on("input", function (event) {
 
 
     const search = $(this).val();
 
-    loadListings(5, search);
+    loadListings(12, search);
   });
 
-  $(".search-form").on("submit", function(event) {
+  $(".search-form").on("submit", function (event) {
     event.preventDefault();
   })
 
 
-  $(".new-listing").on("submit", function(event) {
+  $(".new-listing").on("submit", function (event) {
     event.preventDefault();
 
     const formdata = $(this).serializeArray();
@@ -53,7 +53,6 @@ $(document).ready(function() {
       return accu;
     }, {});
 
-    const search = $("#search-bar").val();
 
     $.post("/listings", package)
       .then((res) => {
@@ -64,51 +63,60 @@ $(document).ready(function() {
 });
 // document ready end
 
-const loadListings = function(limit, search) {
+const loadListings = function (limit, search) {
   const searchText = search ? `search=${search}` : "";
   const limitText = limit ? `limit=${limit}` : "";
-
   const url = `/listings?${searchText}&${limitText}`;
-
 
   $.get(url).then((data) => {
     renderListings(data.listings, data.loggedInUser);
+    console.log(data)
 
+    $(".favorite-icon").on("click", function (event) {
+   event.preventDefault();
 
-    $(".fav").off("click").on("click", function(event) {
-      event.preventDefault();
-      const id = event.target.dataset.id;
+      if ($(this).css('color') === 'rgb(255, 0, 0)') {
+        const id = event.target.dataset.id;
       console.log(id);
 
-      $.post(`/listings/${id}/favorited`)
+      $.post(`/listings/${id}/unfavorited`)
         .then(() => {
-          console.log('post to favorited');
+
 
         });
 
-      setTimeout(function() { location.reload(); }, 50);
+        loadListings(12);
+      }else {
+
+        const id = event.target.dataset.id;
+
+        $.post(`/listings/${id}/favorited`)
+          .then(() => {
+            console.log('post to favorited');
+          });
+        loadListings(12);
+      }
+
+
     });
 
-    $(".unfav").off("click").on("click", function(event) {
+
+    $(".unfav").off("click").on("click", function (event) {
       event.preventDefault();
       const id = event.target.dataset.id;
       console.log(id);
 
       $.post(`/listings/${id}/unfavorited`)
         .then(() => {
-          console.log('post to unfavorited');
+
 
         });
 
-      setTimeout(function() { location.reload(); }, 50);
+        loadListings(12);
     });
 
 
-
-
-
-
-    $(".delete").on("click", function(event) {
+    $(".delete").on("click", function (event) {
       event.preventDefault();
 
       const id = event.target.dataset.id;
@@ -138,6 +146,7 @@ function createListing(listing, loggedInUser) {
   const deleteButton = `
   <button class="delete" data-id='${listing.id}'>delete</button>
   `
+  console.log(`listing favorited value = ${listing.favorited}`)
   return $(`
   <div class="listing_container">
 
@@ -146,21 +155,20 @@ function createListing(listing, loggedInUser) {
   <h4 class="listing-info">$${listing.price} Quantity: ${listing.quantity}</h4>
   <div class="listing-bottom">
     ${contactButton}
-    <button class="fav" data-id = '${listing.id}'>❤️</button>
-    <button class="unfav" data-id='${listing.id}'>&#128148;</button>
+
 
     ${loggedInUser ? deleteButton : ''}
-
+    ${listing.favorited ? `<div class='favorite-icon' style='color:red'><i id="favorite-icon" class="fas fa-heart" data-id = '${listing.id}'></i></div>` : `<div class='favorite-icon'><i id="favorite-icon" class="fas fa-heart" data-id = '${listing.id}'></i></div>`}
 
   </div>
 </div>
   `);
 }
 
-// style= "display:none;"
 
 
 
+{/* <div class='favorite-icon'><i id="favorite-icon" class="fas fa-heart" data-id = '${listing.id}'></i></div> */}
 
 
 
