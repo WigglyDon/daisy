@@ -22,42 +22,76 @@
       <h1>Daisy</h1>
       <h6>your personal plant marketplace.</h6>
     </div>
-    <div class="logged-user">
-      <%= user %>
+
+
+    <div class="title-right">
+
+      <div class="logged-user">
+        <%= user %>
+      </div>
+
+      <div class="nav-btn">
+        <% if (user) { %>
+          <button class="logout">Logout</button>
+          <% } else { %>
+            <button class="admin_button">Login</button>
+            <% } %>
+      </div>
+
     </div>
-
-
-    <div class="nav-btn">
-      <% if (user) { %>
-        <button class="logout">Logout</button>
-        <% } else { %>
-          <button class="admin_button">Login</button>
-          <% } %>
-
-
-    </div>
-
 
   </header>
 
-  <form class="search-form" method="GET" action="/listings" autocomplete="off">
-    <input type="text" id="search-bar" name="search-bar" placeholder="search">
-  </form>
+
+  <div class="search bar">
+
+    <form class="search-form" method="GET" action="/listings" autocomplete="off">
+      <input type="text" id="search-bar" name="search-bar" placeholder="search plants...">
+    </form>
+
+  </div>
+
+
+
+
+
 
 
   <% if (user) { %>
-    <form class="new-listing" action="#">
-      <label for="listing-name">Listing Name:</label><br>
-      <input type="text" id="listing-name" name="listing-name"><br>
-      <label for="img-url">Image URL:</label> <br>
-      <input type="text" id="img-url" name="img-url"><br>
-      <label for="price">Price:</label> <br>
-      <input type="number" id="price" name="price"> <br>
-      <label for="quantity">Quantity:</label> <br>
-      <input type="number" id="quantity" name="quantity"> <br>
-      <input type="submit" value="Submit"> <br>
-    </form>
+
+<div class="open-post">
+
+  <button id="post-button">Post a Listing !</button>
+</div>
+
+
+
+    <div class="myModal">
+
+      <form class="new-listing" action="#" autocomplete="off">
+
+        <div class="exit_button">
+          <i class="fas fa-times-circle"></i>
+        </div>
+<div id="donnysID">
+  <label for="listing-name">Listing Name:</label><br>
+  <input type="text" id="listing-name" name="listing-name"><br>
+  <label for="img-url">Image URL:</label> <br>
+  <input type="text" id="img-url" name="img-url"><br>
+  <label for="price">Price:</label> <br>
+  <input type="number" id="price" name="price"> <br>
+  <label for="quantity">Quantity:</label> <br>
+  <input type="number" id="quantity" name="quantity"> <br>
+  <input type="submit" value="Submit"> <br>
+
+</div>
+
+
+      </form>
+
+    </div>
     <% } %>
+
 
 
 

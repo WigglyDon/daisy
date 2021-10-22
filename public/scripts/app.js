@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  loadListings(12);
+  loadListings(25);
 
   // -------------------------------------
   $(".admin_button").on("click", function (event) {
@@ -8,7 +8,7 @@ $(document).ready(function () {
       console.log("get request");
     });
     setTimeout(function () { location.reload(); }, 50);
-    // location.reload();
+
   });
 
   $(".logout").on("click", function (event) {
@@ -18,7 +18,7 @@ $(document).ready(function () {
     });
 
     setTimeout(function () { location.reload(); }, 50);
-    // location.reload();
+
   });
 
 
@@ -46,7 +46,7 @@ $(document).ready(function () {
 
   $(".new-listing").on("submit", function (event) {
     event.preventDefault();
-
+    $('.myModal').css("display", "none");
     const formdata = $(this).serializeArray();
     const package = formdata.reduce((accu, current) => {
       accu[current.name] = current.value;
@@ -56,10 +56,20 @@ $(document).ready(function () {
 
     $.post("/listings", package)
       .then((res) => {
-        // window.location.reload();
+        $(".new-listing").each(function(){this.reset(); });
+        loadListings(25);
       })
+  });
+
+  $("#post-button").on('click', function(event) {
+
+    $('.myModal').css("display", "flex");
+    $(".exit_button").on("click", function() {
+      $('.myModal').css("display", "none");
+    });
 
   });
+
 });
 // document ready end
 
@@ -122,7 +132,7 @@ const loadListings = function (limit, search) {
       const id = event.target.dataset.id;
       $.post(`/listings/${id}/delete`)
         .then(() => {
-          window.location.reload();
+          loadListings(25);
         });
     });
   });
@@ -156,9 +166,10 @@ function createListing(listing, loggedInUser) {
   <div class="listing-bottom">
     ${contactButton}
 
-
+  <div class="fav-del">
     ${loggedInUser ? deleteButton : ''}
     ${listing.favorited ? `<div class='favorite-icon' style='color:red'><i id="favorite-icon" class="fas fa-heart" data-id = '${listing.id}'></i></div>` : `<div class='favorite-icon'><i id="favorite-icon" class="fas fa-heart" data-id = '${listing.id}'></i></div>`}
+  </div>
 
   </div>
 </div>
