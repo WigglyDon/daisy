@@ -17,6 +17,7 @@ color:  #4d4d4d;
   padding: 10px;
   border-radius: 25px;
 margin: 10px;
+width: 27em;
 
 span{
   font-size: 40px;
@@ -44,6 +45,8 @@ span{
     background-color: inherit;
     border-radius: 5px;
     background-color: #3CB371;
+
+    margin-right: 18em;
     a{
       text-decoration: none;
       color: white;
@@ -168,3 +171,17 @@ header{
   cursor: pointer;
 }
 
+#favorite-icon{
+  font-size: 30px;
+}
+.logged-user{
+  margin-right: -32em;
+}
+
+.logout{
+font-size: 20px;
+}
+
+.admin_button{
+  font-size: 20px;
+  }
