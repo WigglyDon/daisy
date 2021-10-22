@@ -3,6 +3,20 @@ background-color: #F0FFFF;
 font-family: 'Architects Daughter', cursive;
 color:  #4d4d4d;
 }
+
+.title-right {
+  display: flex;
+
+}
+
+.logged-user {
+  padding-right: 10px;
+
+}
+
+
+
+
 .listings_master_container{
   display: flex;
   flex-wrap: wrap;
@@ -17,6 +31,7 @@ color:  #4d4d4d;
   padding: 10px;
   border-radius: 25px;
 margin: 10px;
+width: 30em;
 
 span{
   font-size: 40px;
@@ -44,6 +59,8 @@ span{
     background-color: inherit;
     border-radius: 5px;
     background-color: #3CB371;
+
+    margin-right: 18em;
     a{
       text-decoration: none;
       color: white;
@@ -95,13 +112,29 @@ header{
   padding: 1em;
 }
 
+
 .new-listing{
+  // border: 1px solid white;
+  border-radius: 20px;
+  background: #3cb372;
+  width: 35vw;
+  margin: auto;
   display: flex;
   align-items: center;
- flex-direction: column;
+  flex-direction: column;
+
  input{
    padding: 1em;
+   font-family: "Architects Daughter", cursive;
  }
+}
+
+.myModal {
+  background-color: rgb(0 0 0 / 87%);position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0vh;
+  display:none;
 }
 
 .listing-info{
@@ -168,3 +201,49 @@ header{
   cursor: pointer;
 }
 
+#favorite-icon{
+  font-size: 30px;
+}
+
+
+.logout{
+font-size: 20px;
+}
+
+.admin_button{
+  font-size: 20px;
+  }
+
+.exit_button {
+ content: "\f057";
+ margin-left: 32vw;
+ font-size: 25px;
+  }
+
+.open-post {
+
+  display: flex;
+    justify-content: center;
+
+}
+
+#post-button {
+  border: 1px solid white;
+    background-color: inherit;
+    border-radius: 20px;
+    background-color: #3CB371;
+    border-color: black;
+}
+
+.fav-del {
+  display: flex;
+
+}
+
+#donnysID{
+
+  color:black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
