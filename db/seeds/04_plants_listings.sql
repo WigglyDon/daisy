@@ -21,3 +21,7 @@ INSERT INTO listings (name, picture_url, price, quantity, favorited) VALUES ('Al
 INSERT INTO listings (name, picture_url, price, quantity, favorited) VALUES ('Banana Trees', 'https://cdn.shopify.com/s/files/1/2045/8185/products/11462683_5eb70e2d-ca78-4e90-aed4-28095fa0977b.jpg?v=1614002859', 2,10, FALSE);
 
 INSERT INTO listings (name, picture_url, price, quantity, favorited) VALUES ('Pink Carnations', 'https://www.gardeningknowhow.com/wp-content/uploads/2020/02/potted-carnation.jpg', 11, 4, FALSE);
+
+
+
+INSERT INTO listings (name, picture_url, price, quantity, favorited) VALUES ('Carrots', 'https://www.spokenswahili.com/blog/wp-content/uploads/2015/01/carrot-karoti.jpg', 0.5, 78, FALSE);
