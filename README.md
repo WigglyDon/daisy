@@ -1,17 +1,5 @@
 ## TODO
 
-Search bar
-[x]Needs to send a search query to the database somehow
-[x]will use %isearchedthis% in the query to find matching items
-[x]what kind of request does this need to be in order to ask for a db search?
-[x]what kind of result is it expecting to get back? We did this by name
-[x]it will manipulate the DOM with the results somehow.
-
-[]when favourite button is clicked it makes favourites pop up at the top of the page - can favourite if it has a cookie
-
-[] add new event listener for favourite button
-[]
-
 ## STRETCH
 
 []search by quantity/id/price
