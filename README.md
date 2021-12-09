@@ -3,9 +3,9 @@
 Daisy is a buy and sell website which allows a user to view listings, communicate back and forth with the seller, and post new listings.
 
 Made with love by:
-(Donnie Walsh)[https://github.com/WigglyDonnie]
-(Sarah Keashly)[https://github.com/SarahKeashly]
-(Nathan Judge)[https://github.com/nathan-judge]
+[Donnie Walsh](https://github.com/WigglyDonnie)
+[Sarah Keashly](https://github.com/SarahKeashly)
+[Nathan Judge](https://github.com/nathan-judge)
 
 
 # screenshots
