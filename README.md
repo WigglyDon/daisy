@@ -1,5 +1,7 @@
 # readme is currently undergoing reconstruction!
 
+[pic here](www.google.com)
+
 ## Getting Started
 
 1. Create the `.env` by using `.env.example` as a reference: `cp .env.example .env`
